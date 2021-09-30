@@ -138,24 +138,6 @@ export class Ohmie extends Entity {
     this.set("bondRedemptions", Value.fromStringArray(value));
   }
 
-  get stakeTransactions(): Array<string> {
-    let value = this.get("stakeTransactions");
-    return value!.toStringArray();
-  }
-
-  set stakeTransactions(value: Array<string>) {
-    this.set("stakeTransactions", Value.fromStringArray(value));
-  }
-
-  get unstakeTransactions(): Array<string> {
-    let value = this.get("unstakeTransactions");
-    return value!.toStringArray();
-  }
-
-  set unstakeTransactions(value: Array<string>) {
-    this.set("unstakeTransactions", Value.fromStringArray(value));
-  }
-
   get historicBalance(): Array<string> {
     let value = this.get("historicBalance");
     return value!.toStringArray();
@@ -531,6 +513,7 @@ export class Stake extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("transaction", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmie", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
@@ -571,6 +554,15 @@ export class Stake extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
+  }
+
   get ohmie(): string {
     let value = this.get("ohmie");
     return value!.toString();
@@ -605,7 +597,7 @@ export class Unstake extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("transaction", Value.fromString(""));
-    this.set("ohmie", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
@@ -645,13 +637,13 @@ export class Unstake extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
-    return value!.toString();
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
+    return value!.toBigDecimal();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
   }
 
   get amount(): BigDecimal {
