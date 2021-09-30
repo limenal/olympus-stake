@@ -7,20 +7,25 @@ import {  StakeCall, UnstakeCall  } from '../generated/OlympusStakingV2/OlympusS
 import { toDecimal } from "./utils/Decimals"
 // import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
-import { updateProtocolMetrics } from './utils/ProtocolMetrics'
+import { loadOrCreateProtocolMetric, updateProtocolMetrics } from './utils/ProtocolMetrics'
 
 export function handleStake(call: StakeCall): void {
     // let ohmie = loadOrCreateOHMie(call.from as Address)
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
+    let protocolMetric = loadOrCreateProtocolMetric(transaction.timestamp)
     let value = toDecimal(call.inputs._amount, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
     let stake = new Stake(transaction.id)
     stake.transaction = transaction.id
     // stake.ohmie = ohmie.id
+    // stake.protocolMetric = protocolMetric.id;
     stake.amount = value
     stake.timestamp = transaction.timestamp;
     stake.totalStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+    let pm = updateProtocolMetrics(transaction)
+    stake.protocolMetric = pm.id
+
     stake.save()
 
     // updateOhmieBalance(ohmie, transaction)
@@ -30,6 +35,7 @@ export function handleStake(call: StakeCall): void {
 export function handleUnstake(call: UnstakeCall): void {
     // let ohmie = loadOrCreateOHMie(call.from as Address)
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
+    let protocolMetric = loadOrCreateProtocolMetric(transaction.timestamp)
     let value = toDecimal(call.inputs._amount, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
@@ -37,8 +43,12 @@ export function handleUnstake(call: UnstakeCall): void {
     unstake.transaction = transaction.id
     // unstake.ohmie = ohmie.id
     unstake.amount = value
+    unstake.protocolMetric = protocolMetric.id;
     unstake.timestamp = transaction.timestamp;
     unstake.totalStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+    let pm = updateProtocolMetrics(transaction)
+    unstake.protocolMetric = pm.id
+
     unstake.save()
 
     // updateOhmieBalance(ohmie, transaction)

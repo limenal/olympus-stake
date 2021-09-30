@@ -48,17 +48,20 @@ type Redemption @entity {
 
 type Stake @entity {
   id: ID!
+  protocolMetric: ProtocolMetric!
   transaction: Transaction!
-  amount: BigDecimal!
   totalStaked: BigDecimal!
+  ohmie: Ohmie!
+  amount: BigDecimal!
   timestamp: BigInt!
 }
 
 type Unstake @entity {
   id: ID!
+  protocolMetric: ProtocolMetric!
   transaction: Transaction!
-  amount: BigDecimal!
   totalStaked: BigDecimal!
+  amount: BigDecimal!
   timestamp: BigInt!
 }
 

@@ -512,6 +512,7 @@ export class Stake extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmie", Value.fromString(""));
@@ -543,6 +544,15 @@ export class Stake extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
   }
 
   get transaction(): string {
@@ -596,6 +606,7 @@ export class Unstake extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
@@ -626,6 +637,15 @@ export class Unstake extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
   }
 
   get transaction(): string {

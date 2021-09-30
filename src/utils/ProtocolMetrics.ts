@@ -240,7 +240,7 @@ function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDe
 }
 
 
-export function updateProtocolMetrics(transaction: Transaction): void{
+export function updateProtocolMetrics(transaction: Transaction): ProtocolMetric{
     let pm = loadOrCreateProtocolMetric(transaction.timestamp);
 
     //Total Supply
@@ -291,7 +291,7 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     //Holders
     pm.holders = getHolderAux().value
-    
+
     pm.save()
-    
+    return pm
 }
