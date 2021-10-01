@@ -8,8 +8,6 @@ type DailyBond @entity {
 
 type Ohmie @entity {
   id: ID!
-  bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
-  bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
   historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
   lastBalance: OhmieBalance
   active: Boolean!
@@ -30,19 +28,23 @@ type OhmieBalance @entity {
 type Deposit @entity {
   id: ID!
   transaction: Transaction!
-  ohmie: Ohmie!
   amount: BigDecimal!
   maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
   token: Token!
   value: BigDecimal!
   timestamp: BigInt!
+  ohmReserve: BigDecimal!
 }
 
 type Redemption @entity {
   id: ID!
   transaction: Transaction
-  ohmie: Ohmie
+  payout: BigDecimal!
   token: Token
+  ohmReserve: BigDecimal!
   timestamp: BigInt
 }
 
@@ -74,6 +76,16 @@ type Rebase @entity {
   contract: String!
   timestamp: BigInt!
   value: BigDecimal!
+}
+
+type PriceChange @entity {
+  id: ID!
+  transaction: Transaction
+  priceInUSD: BigDecimal!
+  bondPrice: BigDecimal!
+  ratio: BigDecimal!
+  token: Token
+  timestamp: BigInt
 }
 
 type DailyStakingReward @entity {

@@ -1,7 +1,7 @@
 import { Address } from '@graphprotocol/graph-ts'
 
 import { DepositCall, RedeemCall  } from '../generated/DAIBondV1/DAIBondV1'
-import { Deposit } from '../generated/schema'
+import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 // import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { toDecimal } from "./utils/Decimals"
@@ -35,7 +35,8 @@ export function handleRedeem(call: RedeemCall): void {
 //   let ohmie = loadOrCreateOHMie(call.transaction.from)
   let transaction = loadOrCreateTransaction(call.transaction, call.block)
   
-  let redemption = loadOrCreateRedemption(call.transaction.hash as Address)
+  // let redemption = loadOrCreateRedemption(call.transaction.hash as Address)
+  let redemption = new Redemption(transaction.id)
   redemption.transaction = transaction.id
 //   redemption.ohmie = ohmie.id
   redemption.token = loadOrCreateToken(DAIBOND_TOKEN).id;
