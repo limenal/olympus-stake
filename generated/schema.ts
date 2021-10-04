@@ -299,6 +299,7 @@ export class Deposit extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDeposited", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -416,6 +417,15 @@ export class Deposit extends Entity {
   set ohmReserve(value: BigDecimal) {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
+
+  get totalDeposited(): BigDecimal {
+    let value = this.get("totalDeposited");
+    return value!.toBigDecimal();
+  }
+
+  set totalDeposited(value: BigDecimal) {
+    this.set("totalDeposited", Value.fromBigDecimal(value));
+  }
 }
 
 export class Redemption extends Entity {
@@ -424,6 +434,7 @@ export class Redemption extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalRedeemd", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
@@ -496,6 +507,15 @@ export class Redemption extends Entity {
     }
   }
 
+  get totalRedeemd(): BigDecimal {
+    let value = this.get("totalRedeemd");
+    return value!.toBigDecimal();
+  }
+
+  set totalRedeemd(value: BigDecimal) {
+    this.set("totalRedeemd", Value.fromBigDecimal(value));
+  }
+
   get ohmReserve(): BigDecimal {
     let value = this.get("ohmReserve");
     return value!.toBigDecimal();
@@ -531,6 +551,7 @@ export class Stake extends Entity {
     this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmie", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
@@ -589,6 +610,15 @@ export class Stake extends Entity {
     this.set("totalStaked", Value.fromBigDecimal(value));
   }
 
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
+  }
+
   get ohmie(): string {
     let value = this.get("ohmie");
     return value!.toString();
@@ -624,7 +654,8 @@ export class Unstake extends Entity {
 
     this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
-    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
@@ -673,13 +704,22 @@ export class Unstake extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get totalStaked(): BigDecimal {
-    let value = this.get("totalStaked");
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
     return value!.toBigDecimal();
   }
 
-  set totalStaked(value: BigDecimal) {
-    this.set("totalStaked", Value.fromBigDecimal(value));
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
   }
 
   get amount(): BigDecimal {
@@ -811,7 +851,7 @@ export class PriceChange extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("bondPrice", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("internalPrice", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ratio", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
@@ -867,13 +907,13 @@ export class PriceChange extends Entity {
     this.set("priceInUSD", Value.fromBigDecimal(value));
   }
 
-  get bondPrice(): BigDecimal {
-    let value = this.get("bondPrice");
+  get internalPrice(): BigDecimal {
+    let value = this.get("internalPrice");
     return value!.toBigDecimal();
   }
 
-  set bondPrice(value: BigDecimal) {
-    this.set("bondPrice", Value.fromBigDecimal(value));
+  set internalPrice(value: BigDecimal) {
+    this.set("internalPrice", Value.fromBigDecimal(value));
   }
 
   get ratio(): BigDecimal {
@@ -883,6 +923,133 @@ export class PriceChange extends Entity {
 
   set ratio(value: BigDecimal) {
     this.set("ratio", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class VariableAdjustment extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("initialBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("newBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("adjustment", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("addition", Value.fromBoolean(false));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save VariableAdjustment entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save VariableAdjustment entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("VariableAdjustment", id.toString(), this);
+    }
+  }
+
+  static load(id: string): VariableAdjustment | null {
+    return changetype<VariableAdjustment | null>(
+      store.get("VariableAdjustment", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get initialBCV(): BigDecimal {
+    let value = this.get("initialBCV");
+    return value!.toBigDecimal();
+  }
+
+  set initialBCV(value: BigDecimal) {
+    this.set("initialBCV", Value.fromBigDecimal(value));
+  }
+
+  get newBCV(): BigDecimal {
+    let value = this.get("newBCV");
+    return value!.toBigDecimal();
+  }
+
+  set newBCV(value: BigDecimal) {
+    this.set("newBCV", Value.fromBigDecimal(value));
+  }
+
+  get adjustment(): BigDecimal {
+    let value = this.get("adjustment");
+    return value!.toBigDecimal();
+  }
+
+  set adjustment(value: BigDecimal) {
+    this.set("adjustment", Value.fromBigDecimal(value));
+  }
+
+  get addition(): boolean {
+    let value = this.get("addition");
+    return value!.toBoolean();
+  }
+
+  set addition(value: boolean) {
+    this.set("addition", Value.fromBoolean(value));
   }
 
   get token(): string | null {

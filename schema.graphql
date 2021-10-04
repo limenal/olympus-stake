@@ -37,6 +37,7 @@ type Deposit @entity {
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
+  totalDeposited: BigDecimal!
 }
 
 type Redemption @entity {
@@ -44,6 +45,7 @@ type Redemption @entity {
   transaction: Transaction
   payout: BigDecimal!
   token: Token
+  totalRedeemd: BigDecimal!
   ohmReserve: BigDecimal!
   timestamp: BigInt
 }
@@ -53,6 +55,7 @@ type Stake @entity {
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   totalStaked: BigDecimal!
+  currentStaked: BigDecimal!
   ohmie: Ohmie!
   amount: BigDecimal!
   timestamp: BigInt!
@@ -62,7 +65,8 @@ type Unstake @entity {
   id: ID!
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
-  totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  currentStaked: BigDecimal!
   amount: BigDecimal!
   timestamp: BigInt!
 }
@@ -82,8 +86,19 @@ type PriceChange @entity {
   id: ID!
   transaction: Transaction
   priceInUSD: BigDecimal!
-  bondPrice: BigDecimal!
+  internalPrice: BigDecimal!
   ratio: BigDecimal!
+  token: Token
+  timestamp: BigInt
+}
+
+type VariableAdjustment @entity {
+  id: ID!
+  transaction: Transaction
+  initialBCV: BigDecimal!
+  newBCV: BigDecimal!
+  adjustment: BigDecimal!
+  addition: Boolean
   token: Token
   timestamp: BigInt
 }

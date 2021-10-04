@@ -16,14 +16,23 @@ export function handleStake(call: StakeOHMCall): void {
     let value = toDecimal(call.inputs.amountToStake_, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
+    let counter = Stake.load('1')
+    if(counter == null)
+    {
+        counter = new Stake('1')
+    }
+    counter.totalStaked = counter.totalStaked.plus(value)
+    counter.save()
+
     let stake = new Stake(transaction.id)
 
     // stake.protocolMetric = protocolMetric.id;
     stake.transaction = transaction.id
     // stake.ohmie = ohmie.id
     stake.amount = value
-    stake.timestamp = transaction.timestamp;
-    stake.totalStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
+    stake.timestamp = transaction.timestamp
+    stake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
+    stake.totalStaked = counter.totalStaked
 
     let pm = updateProtocolMetrics(transaction)
     stake.protocolMetric = pm.id
@@ -40,6 +49,14 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     let value = toDecimal(call.inputs.amountToWithdraw_, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
+    let counter = Unstake.load('1')
+    if(counter == null)
+    {
+        counter = new Unstake('1')
+    }
+    counter.totalUnstaked = counter.totalUnstaked.plus(value)
+    counter.save()
+
     let unstake = new Unstake(transaction.id)
     unstake.transaction = transaction.id
     // unstake.protocolMetric = protocolMetric.id;
@@ -47,7 +64,9 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     // unstake.ohmie = ohmie.id
     unstake.amount = value
     unstake.timestamp = transaction.timestamp;
-    unstake.totalStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
+    unstake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
+    unstake.totalUnstaked = counter.totalUnstaked
+
     let pm = updateProtocolMetrics(transaction)
     unstake.protocolMetric = pm.id
 
