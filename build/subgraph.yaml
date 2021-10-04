@@ -235,10 +235,6 @@ dataSources:
           handler: handleBondCreate
         - event: BondRedeemed(indexed address,uint256,uint256)
           handler: handleBondRedeem
-        - event: BondPriceChanged(indexed uint256,indexed uint256,indexed uint256)
-          handler: handleBondPriceChang
-        - event: ControlVariableAdjustment(uint256,uint256,uint256,bool)
-          handler: handleControlVariableAdjustment
       file: DAIBondV3\DAIBondV3.wasm
   - kind: ethereum/contract
     name: ETHBondV1
