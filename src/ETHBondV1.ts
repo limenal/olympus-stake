@@ -1,5 +1,5 @@
-import { Address } from '@graphprotocol/graph-ts'
-import {  DepositCall, RedeemCall, BondCreated, BondRedeemed, BondPriceChanged, ControlVariableAdjustment} from '../generated/DAIBondV3/DAIBondV3'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
+import {  DepositCall, RedeemCall, BondCreated, BondRedeemed, BondPriceChanged, ControlVariableAdjustment} from '../generated/ETHBondV1/ETHBondV1'
 import { Deposit, Redemption, PriceChange, VariableAdjustment } from '../generated/schema'
 import { OlympusERC20 } from '../generated/sOlympusERC20V1/OlympusERC20'
 import { loadOrCreateTransaction } from "./utils/Transactions"
@@ -8,7 +8,7 @@ import { toDecimal } from "./utils/Decimals"
 import { ETHBOND_TOKEN, OHM_ERC20_CONTRACT, ETHBOND_CONTRACT1} from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
-import { getETHUSDRate } from './utils/Price'
+// import { getETHUSDRate } from './utils/Price'
 
 export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
@@ -24,19 +24,25 @@ export function handleBondCreate(event: BondCreated) : void{
   {
       counter = new Deposit('1')
   }
-  counter.totalDeposited = counter.totalDeposited.plus(amount.times(getETHUSDRate()))
+  counter.totalDepositedETH = counter.totalDepositedETH.plus(amount)
+  counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
   counter.save()
 
   deposit.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(ETHBOND_CONTRACT1)), 9)
-  deposit.amount = amount.times(getETHUSDRate())
+  deposit.amount = amount
   deposit.payout = payout
   deposit.expires = event.params.expires
   deposit.priceInUSD = toDecimal(price, 18)
   deposit.token = token.id
   deposit.timestamp = transaction.timestamp
   deposit.transaction = transaction.id
-  deposit.totalDeposited = counter.totalDeposited
-  deposit.token = token.id
+  deposit.totalDepositedDAI = counter.totalDepositedDAI
+  deposit.totalDepositedETH = counter.totalDepositedETH
+  deposit.totalDepositedFRAX = counter.totalDepositedFRAX
+  deposit.totalDepositedLUSD = counter.totalDepositedLUSD
+  deposit.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
+  deposit.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
+  deposit.depositCount = counter.depositCount
 
   deposit.save()
 
@@ -78,7 +84,7 @@ export function handleBondPriceChange(event: BondPriceChanged) : void{
   price.transaction = transaction.id
   
   price.priceInUSD = toDecimal(event.params.priceInUSD, 9)
-  price.internalPrice = toDecimal(event.params.internalPrice, 9)
+  price.internalPrice = toDecimal(event.params.internalPrice, 2)
   price.ratio = toDecimal(event.params.debtRatio, 9)
   price.token = token.id
   price.timestamp = transaction.timestamp

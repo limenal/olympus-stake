@@ -289,17 +289,21 @@ export class Deposit extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("transaction", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("expires", Value.fromBigInt(BigInt.zero()));
     this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("token", Value.fromString(""));
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDeposited", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -328,13 +332,21 @@ export class Deposit extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get transaction(): string {
+  get transaction(): string | null {
     let value = this.get("transaction");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
   }
 
   get amount(): BigDecimal {
@@ -382,13 +394,21 @@ export class Deposit extends Entity {
     this.set("priceInUSD", Value.fromBigDecimal(value));
   }
 
-  get token(): string {
+  get token(): string | null {
     let value = this.get("token");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set token(value: string) {
-    this.set("token", Value.fromString(value));
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
   }
 
   get value(): BigDecimal {
@@ -418,13 +438,67 @@ export class Deposit extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDeposited(): BigDecimal {
-    let value = this.get("totalDeposited");
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
     return value!.toBigDecimal();
   }
 
-  set totalDeposited(value: BigDecimal) {
-    this.set("totalDeposited", Value.fromBigDecimal(value));
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
   }
 }
 
@@ -551,6 +625,7 @@ export class Stake extends Entity {
     this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmie", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
@@ -610,6 +685,15 @@ export class Stake extends Entity {
     this.set("totalStaked", Value.fromBigDecimal(value));
   }
 
+  get stakeCount(): BigInt {
+    let value = this.get("stakeCount");
+    return value!.toBigInt();
+  }
+
+  set stakeCount(value: BigInt) {
+    this.set("stakeCount", Value.fromBigInt(value));
+  }
+
   get currentStaked(): BigDecimal {
     let value = this.get("currentStaked");
     return value!.toBigDecimal();
@@ -655,6 +739,7 @@ export class Unstake extends Entity {
     this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
     this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
@@ -711,6 +796,15 @@ export class Unstake extends Entity {
 
   set totalUnstaked(value: BigDecimal) {
     this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
   }
 
   get currentStaked(): BigDecimal {

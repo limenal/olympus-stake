@@ -20,6 +20,7 @@ export function handleStake(call: StakeCall): void {
         counter = new Stake('1')
     }
     counter.totalStaked = counter.totalStaked
+    counter.stakeCount = counter.stakeCount
     counter.save()
 
     let stake = new Stake(transaction.id)
@@ -27,6 +28,7 @@ export function handleStake(call: StakeCall): void {
     stake.amount = value
     stake.timestamp = transaction.timestamp;
     stake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+    stake.stakeCount = counter.stakeCount
     stake.totalStaked = counter.totalStaked
 
     stake.save()

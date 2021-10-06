@@ -1,4 +1,4 @@
-import { Address } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { Stake, Unstake } from '../generated/schema'
 import { OlympusERC20 } from '../generated/sOlympusERC20V1/OlympusERC20'
 import { OHM_ERC20_CONTRACT, STAKING_CONTRACT_V2 } from './utils/Constants'
@@ -20,8 +20,12 @@ export function handleStake(call: StakeCall): void {
     if(counter == null)
     {
         counter = new Stake('1')
+        counter.totalStaked = BigDecimal.fromString('0')
+        counter.stakeCount = BigInt.fromString('0')
     }
     counter.totalStaked = counter.totalStaked.plus(value)
+    counter.stakeCount = counter.stakeCount
+    counter.stakeCount = counter.stakeCount.plus(BigInt.fromString('1'))
     counter.save()
 
     let stake = new Stake(transaction.id)
@@ -31,6 +35,7 @@ export function handleStake(call: StakeCall): void {
     stake.amount = value
     stake.timestamp = transaction.timestamp;
     stake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+    stake.stakeCount = counter.stakeCount
     stake.totalStaked = counter.totalStaked
     let pm = updateProtocolMetrics(transaction)
     stake.protocolMetric = pm.id
@@ -52,8 +57,11 @@ export function handleUnstake(call: UnstakeCall): void {
     if(counter == null)
     {
         counter = new Unstake('1')
+        counter.totalUnstaked = BigDecimal.fromString('0')
+        counter.unstakeCount = BigInt.fromString('0')
     }
     counter.totalUnstaked = counter.totalUnstaked.plus(value)
+    counter.unstakeCount = counter.unstakeCount.plus(BigInt.fromString('1'))
     counter.save()
 
     let unstake = new Unstake(transaction.id)
@@ -64,6 +72,7 @@ export function handleUnstake(call: UnstakeCall): void {
     unstake.timestamp = transaction.timestamp;
     unstake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
     unstake.totalUnstaked = counter.totalUnstaked
+    unstake.unstakeCount = counter.unstakeCount
     let pm = updateProtocolMetrics(transaction)
     unstake.protocolMetric = pm.id
 

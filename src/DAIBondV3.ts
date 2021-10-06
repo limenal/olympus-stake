@@ -1,4 +1,4 @@
-import { Address } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 
 import {  DepositCall, RedeemCall, BondCreated, BondRedeemed, BondPriceChanged, ControlVariableAdjustment} from '../generated/DAIBondV3/DAIBondV3'
 import { Deposit, Redemption, PriceChange, VariableAdjustment } from '../generated/schema'
@@ -27,7 +27,8 @@ export function handleBondCreate(event: BondCreated) : void{
     {
         counter = new Deposit('1')
     }
-    counter.totalDeposited = counter.totalDeposited.plus(amount)
+    counter.totalDepositedDAI = counter.totalDepositedDAI.plus(amount)
+    counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
     counter.save()
 
     deposit.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(DAIBOND_CONTRACTS3)), 9)
@@ -35,12 +36,17 @@ export function handleBondCreate(event: BondCreated) : void{
     deposit.payout = payout
     deposit.expires = event.params.expires
     deposit.priceInUSD = toDecimal(price, 18)
-    deposit.token = token.id
     deposit.timestamp = transaction.timestamp
     deposit.transaction = transaction.id
-    deposit.totalDeposited = counter.totalDeposited
     deposit.token = token.id
-
+    deposit.totalDepositedDAI = counter.totalDepositedDAI
+    deposit.totalDepositedETH = counter.totalDepositedETH
+    deposit.totalDepositedFRAX = counter.totalDepositedFRAX
+    deposit.totalDepositedLUSD = counter.totalDepositedLUSD
+    deposit.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
+    deposit.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
+    deposit.depositCount = counter.depositCount
+  
     deposit.save()
 
 }
@@ -80,8 +86,8 @@ export function handleBondPriceChange(event: BondPriceChanged) : void{
 
     price.transaction = transaction.id
     
-    price.priceInUSD = toDecimal(event.params.priceInUSD, 9)
-    price.internalPrice = toDecimal(event.params.internalPrice, 9)
+    price.priceInUSD = toDecimal(event.params.priceInUSD, 18)
+    price.internalPrice = toDecimal(event.params.internalPrice, 2)
     price.ratio = toDecimal(event.params.debtRatio, 9)
     price.token = token.id
     price.timestamp = transaction.timestamp

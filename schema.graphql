@@ -27,17 +27,23 @@ type OhmieBalance @entity {
 
 type Deposit @entity {
   id: ID!
-  transaction: Transaction!
+  transaction: Transaction
   amount: BigDecimal!
   maxPremium: BigDecimal!
   payout: BigDecimal!
   expires: BigInt!
   priceInUSD: BigDecimal!
-  token: Token!
+  token: Token
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDeposited: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
 }
 
 type Redemption @entity {
@@ -55,6 +61,7 @@ type Stake @entity {
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   totalStaked: BigDecimal!
+  stakeCount: BigInt!
   currentStaked: BigDecimal!
   ohmie: Ohmie!
   amount: BigDecimal!
@@ -66,6 +73,7 @@ type Unstake @entity {
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   totalUnstaked: BigDecimal!
+  unstakeCount: BigInt!
   currentStaked: BigDecimal!
   amount: BigDecimal!
   timestamp: BigInt!
