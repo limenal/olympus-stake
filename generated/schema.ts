@@ -284,6 +284,2088 @@ export class OhmieBalance extends Entity {
   }
 }
 
+export class DepositYearDaiEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositYearDaiEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearDaiEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearDaiEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearDaiEntity | null {
+    return changetype<DepositYearDaiEntity | null>(
+      store.get("DepositYearDaiEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositYearETHEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositYearETHEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearETHEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearETHEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearETHEntity | null {
+    return changetype<DepositYearETHEntity | null>(
+      store.get("DepositYearETHEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositYearFraxEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save DepositYearFraxEntity entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearFraxEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearFraxEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearFraxEntity | null {
+    return changetype<DepositYearFraxEntity | null>(
+      store.get("DepositYearFraxEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositYearLusdEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save DepositYearLusdEntity entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearLusdEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearLusdEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearLusdEntity | null {
+    return changetype<DepositYearLusdEntity | null>(
+      store.get("DepositYearLusdEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositYearOHMDAIEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save DepositYearOHMDAIEntity entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearOHMDAIEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearOHMDAIEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearOHMDAIEntity | null {
+    return changetype<DepositYearOHMDAIEntity | null>(
+      store.get("DepositYearOHMDAIEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositYearOHMFRAXEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save DepositYearOHMFRAXEntity entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositYearOHMFRAXEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositYearOHMFRAXEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositYearOHMFRAXEntity | null {
+    return changetype<DepositYearOHMFRAXEntity | null>(
+      store.get("DepositYearOHMFRAXEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositDayEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("hourDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositDayEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositDayEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositDayEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositDayEntity | null {
+    return changetype<DepositDayEntity | null>(
+      store.get("DepositDayEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get hourDeposit(): Array<string> {
+    let value = this.get("hourDeposit");
+    return value!.toStringArray();
+  }
+
+  set hourDeposit(value: Array<string>) {
+    this.set("hourDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositHourEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("minuteDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositHourEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositHourEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositHourEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositHourEntity | null {
+    return changetype<DepositHourEntity | null>(
+      store.get("DepositHourEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get minuteDeposit(): Array<string> {
+    let value = this.get("minuteDeposit");
+    return value!.toStringArray();
+  }
+
+  set minuteDeposit(value: Array<string>) {
+    this.set("minuteDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositMinuteEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("secondDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositMinuteEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositMinuteEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositMinuteEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositMinuteEntity | null {
+    return changetype<DepositMinuteEntity | null>(
+      store.get("DepositMinuteEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
+    return value!.toBigDecimal();
+  }
+
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
+  }
+
+  get payout(): BigDecimal {
+    let value = this.get("payout");
+    return value!.toBigDecimal();
+  }
+
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
+    return value!.toBigDecimal();
+  }
+
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedDAI(): BigDecimal {
+    let value = this.get("totalDepositedDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedDAI(value: BigDecimal) {
+    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedETH(): BigDecimal {
+    let value = this.get("totalDepositedETH");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedETH(value: BigDecimal) {
+    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedFRAX(): BigDecimal {
+    let value = this.get("totalDepositedFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedFRAX(value: BigDecimal) {
+    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedLUSD(): BigDecimal {
+    let value = this.get("totalDepositedLUSD");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedLUSD(value: BigDecimal) {
+    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMDAI(): BigDecimal {
+    let value = this.get("totalDepositedOHMDAI");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMDAI(value: BigDecimal) {
+    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  }
+
+  get totalDepositedOHMFRAX(): BigDecimal {
+    let value = this.get("totalDepositedOHMFRAX");
+    return value!.toBigDecimal();
+  }
+
+  set totalDepositedOHMFRAX(value: BigDecimal) {
+    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get secondDeposit(): Array<string> {
+    let value = this.get("secondDeposit");
+    return value!.toStringArray();
+  }
+
+  set secondDeposit(value: Array<string>) {
+    this.set("secondDeposit", Value.fromStringArray(value));
+  }
+}
+
 export class Deposit extends Entity {
   constructor(id: string) {
     super();
@@ -617,36 +2699,40 @@ export class Redemption extends Entity {
   }
 }
 
-export class Stake extends Entity {
+export class StakeYear extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("protocolMetric", Value.fromString(""));
     this.set("transaction", Value.fromString(""));
-    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmie", Value.fromString(""));
-    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("dayStake", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Stake entity without an ID");
+    assert(id != null, "Cannot save StakeYear entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Stake entity with non-string ID. " +
+        "Cannot save StakeYear entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Stake", id.toString(), this);
+      store.set("StakeYear", id.toString(), this);
     }
   }
 
-  static load(id: string): Stake | null {
-    return changetype<Stake | null>(store.get("Stake", id));
+  static load(id: string): StakeYear | null {
+    return changetype<StakeYear | null>(store.get("StakeYear", id));
   }
 
   get id(): string {
@@ -656,6 +2742,194 @@ export class Stake extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value!.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
+  }
+
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get amountStaked(): BigDecimal {
+    let value = this.get("amountStaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountStaked(value: BigDecimal) {
+    this.set("amountStaked", Value.fromBigDecimal(value));
+  }
+
+  get amountUnstaked(): BigDecimal {
+    let value = this.get("amountUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountUnstaked(value: BigDecimal) {
+    this.set("amountUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get stakeCount(): BigInt {
+    let value = this.get("stakeCount");
+    return value!.toBigInt();
+  }
+
+  set stakeCount(value: BigInt) {
+    this.set("stakeCount", Value.fromBigInt(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get dayStake(): Array<string> {
+    let value = this.get("dayStake");
+    return value!.toStringArray();
+  }
+
+  set dayStake(value: Array<string>) {
+    this.set("dayStake", Value.fromStringArray(value));
+  }
+}
+
+export class StakeDay extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("protocolMetric", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("ohmie", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("hourStake", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StakeDay entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save StakeDay entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("StakeDay", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeDay | null {
+    return changetype<StakeDay | null>(store.get("StakeDay", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
   }
 
   get protocolMetric(): string {
@@ -685,6 +2959,33 @@ export class Stake extends Entity {
     this.set("totalStaked", Value.fromBigDecimal(value));
   }
 
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get amountStaked(): BigDecimal {
+    let value = this.get("amountStaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountStaked(value: BigDecimal) {
+    this.set("amountStaked", Value.fromBigDecimal(value));
+  }
+
+  get amountUnstaked(): BigDecimal {
+    let value = this.get("amountUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountUnstaked(value: BigDecimal) {
+    this.set("amountUnstaked", Value.fromBigDecimal(value));
+  }
+
   get stakeCount(): BigInt {
     let value = this.get("stakeCount");
     return value!.toBigInt();
@@ -692,6 +2993,15 @@ export class Stake extends Entity {
 
   set stakeCount(value: BigInt) {
     this.set("stakeCount", Value.fromBigInt(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
   }
 
   get currentStaked(): BigDecimal {
@@ -712,13 +3022,516 @@ export class Stake extends Entity {
     this.set("ohmie", Value.fromString(value));
   }
 
-  get amount(): BigDecimal {
-    let value = this.get("amount");
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get hourStake(): Array<string> {
+    let value = this.get("hourStake");
+    return value!.toStringArray();
+  }
+
+  set hourStake(value: Array<string>) {
+    this.set("hourStake", Value.fromStringArray(value));
+  }
+}
+
+export class StakeHour extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("protocolMetric", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("ohmie", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("minuteStake", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StakeHour entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save StakeHour entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("StakeHour", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeHour | null {
+    return changetype<StakeHour | null>(store.get("StakeHour", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
     return value!.toBigDecimal();
   }
 
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
+  }
+
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get amountStaked(): BigDecimal {
+    let value = this.get("amountStaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountStaked(value: BigDecimal) {
+    this.set("amountStaked", Value.fromBigDecimal(value));
+  }
+
+  get amountUnstaked(): BigDecimal {
+    let value = this.get("amountUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountUnstaked(value: BigDecimal) {
+    this.set("amountUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get stakeCount(): BigInt {
+    let value = this.get("stakeCount");
+    return value!.toBigInt();
+  }
+
+  set stakeCount(value: BigInt) {
+    this.set("stakeCount", Value.fromBigInt(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
+  }
+
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value!.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get minuteStake(): Array<string> {
+    let value = this.get("minuteStake");
+    return value!.toStringArray();
+  }
+
+  set minuteStake(value: Array<string>) {
+    this.set("minuteStake", Value.fromStringArray(value));
+  }
+}
+
+export class StakeMinute extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("protocolMetric", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("ohmie", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("secondStake", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StakeMinute entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save StakeMinute entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("StakeMinute", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeMinute | null {
+    return changetype<StakeMinute | null>(store.get("StakeMinute", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
+  }
+
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get amountStaked(): BigDecimal {
+    let value = this.get("amountStaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountStaked(value: BigDecimal) {
+    this.set("amountStaked", Value.fromBigDecimal(value));
+  }
+
+  get amountUnstaked(): BigDecimal {
+    let value = this.get("amountUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountUnstaked(value: BigDecimal) {
+    this.set("amountUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get stakeCount(): BigInt {
+    let value = this.get("stakeCount");
+    return value!.toBigInt();
+  }
+
+  set stakeCount(value: BigInt) {
+    this.set("stakeCount", Value.fromBigInt(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
+  }
+
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value!.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get secondStake(): Array<string> {
+    let value = this.get("secondStake");
+    return value!.toStringArray();
+  }
+
+  set secondStake(value: Array<string>) {
+    this.set("secondStake", Value.fromStringArray(value));
+  }
+}
+
+export class Stake extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("protocolMetric", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
+    this.set("totalStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("amountUnstaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("ohmie", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Stake entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Stake entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Stake", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Stake | null {
+    return changetype<Stake | null>(store.get("Stake", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get protocolMetric(): string {
+    let value = this.get("protocolMetric");
+    return value!.toString();
+  }
+
+  set protocolMetric(value: string) {
+    this.set("protocolMetric", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get totalStaked(): BigDecimal {
+    let value = this.get("totalStaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalStaked(value: BigDecimal) {
+    this.set("totalStaked", Value.fromBigDecimal(value));
+  }
+
+  get totalUnstaked(): BigDecimal {
+    let value = this.get("totalUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set totalUnstaked(value: BigDecimal) {
+    this.set("totalUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get amountStaked(): BigDecimal {
+    let value = this.get("amountStaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountStaked(value: BigDecimal) {
+    this.set("amountStaked", Value.fromBigDecimal(value));
+  }
+
+  get amountUnstaked(): BigDecimal {
+    let value = this.get("amountUnstaked");
+    return value!.toBigDecimal();
+  }
+
+  set amountUnstaked(value: BigDecimal) {
+    this.set("amountUnstaked", Value.fromBigDecimal(value));
+  }
+
+  get stakeCount(): BigInt {
+    let value = this.get("stakeCount");
+    return value!.toBigInt();
+  }
+
+  set stakeCount(value: BigInt) {
+    this.set("stakeCount", Value.fromBigInt(value));
+  }
+
+  get unstakeCount(): BigInt {
+    let value = this.get("unstakeCount");
+    return value!.toBigInt();
+  }
+
+  set unstakeCount(value: BigInt) {
+    this.set("unstakeCount", Value.fromBigInt(value));
+  }
+
+  get currentStaked(): BigDecimal {
+    let value = this.get("currentStaked");
+    return value!.toBigDecimal();
+  }
+
+  set currentStaked(value: BigDecimal) {
+    this.set("currentStaked", Value.fromBigDecimal(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value!.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
   }
 
   get timestamp(): BigInt {
@@ -1372,6 +4185,8 @@ export class Token extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1398,6 +4213,15 @@ export class Token extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 

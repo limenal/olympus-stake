@@ -10,6 +10,7 @@ import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
 import { OHMDAILPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMDAISLPBOND_CONTRACT4 } from './utils/Constants'
 import { getPairUSD } from './utils/Price'
+import {DepositAddOHMDAI} from "./utils/YearsDeposit"
 
 export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
@@ -19,6 +20,8 @@ export function handleBondCreate(event: BondCreated) : void{
   let price = event.params.priceInUSD
   let deposit = new Deposit(transaction.id)
   let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
+
+  // DepositAddOHMDAI(transaction, token.id, amount, transaction.timestamp)
 
   let counter = Deposit.load('1')
   if(counter == null)

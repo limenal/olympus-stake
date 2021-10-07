@@ -25,6 +25,213 @@ type OhmieBalance @entity {
   timestamp: BigInt!
 }
 
+type DepositYearDaiEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearETHEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearFraxEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearLusdEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearOHMDAIEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearOHMFRAXEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositDayEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  hourDeposit:[DepositHourEntity!]!
+}
+
+type DepositHourEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  minuteDeposit:[DepositMinuteEntity!]!
+}
+
+type DepositMinuteEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
+  totalDepositedDAI: BigDecimal!
+  totalDepositedETH: BigDecimal!
+  totalDepositedFRAX: BigDecimal!
+  totalDepositedLUSD: BigDecimal!
+  totalDepositedOHMDAI: BigDecimal!
+  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  secondDeposit:[Deposit!]!
+}
+
 type Deposit @entity {
   id: ID!
   transaction: Transaction
@@ -56,15 +263,87 @@ type Redemption @entity {
   timestamp: BigInt
 }
 
-type Stake @entity {
+type StakeYear @entity {
   id: ID!
+  token: Token
+  protocolMetric: ProtocolMetric!
+  transaction: Transaction!
+  currentStaked: BigDecimal!
+  ohmie: Ohmie!
+  totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  amountStaked: BigDecimal!
+  amountUnstaked: BigDecimal!
+  stakeCount: BigInt!
+  unstakeCount: BigInt!
+  timestamp: BigInt!
+  dayStake: [StakeDay!]!
+}
+
+type StakeDay @entity {
+  id: ID!
+  token: Token
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  amountStaked: BigDecimal!
+  amountUnstaked: BigDecimal!
   stakeCount: BigInt!
+  unstakeCount: BigInt!
   currentStaked: BigDecimal!
   ohmie: Ohmie!
-  amount: BigDecimal!
+  timestamp: BigInt!
+  hourStake: [StakeHour!]!
+}
+
+type StakeHour @entity {
+  id: ID!
+  token: Token
+  protocolMetric: ProtocolMetric!
+  transaction: Transaction!
+  totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  amountStaked: BigDecimal!
+  amountUnstaked: BigDecimal!
+  stakeCount: BigInt!
+  unstakeCount: BigInt!
+  currentStaked: BigDecimal!
+  ohmie: Ohmie!
+  timestamp: BigInt!
+  minuteStake: [StakeMinute!]!
+}
+
+type StakeMinute @entity {
+  id: ID!
+  token: Token
+  protocolMetric: ProtocolMetric!
+  transaction: Transaction!
+  totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  amountStaked: BigDecimal!
+  amountUnstaked: BigDecimal!
+  stakeCount: BigInt!
+  unstakeCount: BigInt!
+  currentStaked: BigDecimal!
+  ohmie: Ohmie!
+  timestamp: BigInt!
+  secondStake: [Stake!]!
+}
+
+type Stake @entity {
+  id: ID!
+  token: Token
+  protocolMetric: ProtocolMetric!
+  transaction: Transaction!
+  totalStaked: BigDecimal!
+  totalUnstaked: BigDecimal!
+  amountStaked: BigDecimal!
+  amountUnstaked: BigDecimal!
+  stakeCount: BigInt!
+  unstakeCount: BigInt!
+  currentStaked: BigDecimal!
+  ohmie: Ohmie!
   timestamp: BigInt!
 }
 
@@ -132,6 +411,8 @@ type Transaction @entity {
 
 type Token @entity {
   id: ID!
+  timestamp: BigInt!
+
 }
 
 type ProtocolMetric @entity {

@@ -14,24 +14,24 @@ export function handleStake(call: StakeCall): void {
     let value = toDecimal(call.inputs._amount, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
-    let counter = Stake.load('1')
-    if(counter == null)
-    {
-        counter = new Stake('1')
-    }
-    counter.totalStaked = counter.totalStaked
-    counter.stakeCount = counter.stakeCount
-    counter.save()
+    // let counter = Stake.load('1')
+    // if(counter == null)
+    // {
+    //     counter = new Stake('1')
+    // }
+    // counter.totalStaked = counter.totalStaked
+    // counter.stakeCount = counter.stakeCount
+    // counter.save()
 
-    let stake = new Stake(transaction.id)
-    stake.transaction = transaction.id
-    stake.amount = value
-    stake.timestamp = transaction.timestamp;
-    stake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
-    stake.stakeCount = counter.stakeCount
-    stake.totalStaked = counter.totalStaked
+    // let stake = new Stake(transaction.id)
+    // stake.transaction = transaction.id
+    // stake.amount = value
+    // stake.timestamp = transaction.timestamp;
+    // stake.currentStaked = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+    // stake.stakeCount = counter.stakeCount
+    // stake.totalStaked = counter.totalStaked
 
-    stake.save()
+    // stake.save()
 
     // updateOhmieBalance(ohmie, transaction)
 }

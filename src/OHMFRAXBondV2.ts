@@ -11,6 +11,7 @@ import { createDailyBondRecord } from './utils/DailyBond'
 import { OHMFRAXLPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMFRAXLPBOND_CONTRACT2 } from './utils/Constants'
 
 import { getPairUSD } from './utils/Price'
+import {DepositAddOHMFRAX} from "./utils/YearsDeposit"
 
 export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
@@ -21,32 +22,34 @@ export function handleBondCreate(event: BondCreated) : void{
   let deposit = new Deposit(transaction.id)
   let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
-  let counter = Deposit.load('1')
-  if(counter == null)
-  {
-    counter = new Deposit('1')
-  }
-  counter.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX.plus(amount)
-  counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-  counter.save()
+  DepositAddOHMFRAX(transaction, token.id, amount, transaction.timestamp)
 
-  deposit.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(OHMFRAXLPBOND_CONTRACT2)), 9)
-  deposit.amount = amount
-  deposit.payout = payout
-  deposit.expires = event.params.expires
-  deposit.priceInUSD = toDecimal(price, 18)
-  deposit.token = token.id
-  deposit.timestamp = transaction.timestamp
-  deposit.transaction = transaction.id
-  deposit.totalDepositedDAI = counter.totalDepositedDAI
-  deposit.totalDepositedETH = counter.totalDepositedETH
-  deposit.totalDepositedFRAX = counter.totalDepositedFRAX
-  deposit.totalDepositedLUSD = counter.totalDepositedLUSD
-  deposit.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
-  deposit.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
-  deposit.depositCount = counter.depositCount
+  // let counter = Deposit.load('1')
+  // if(counter == null)
+  // {
+  //   counter = new Deposit('1')
+  // }
+  // counter.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX.plus(amount)
+  // counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
+  // counter.save()
 
-  deposit.save()
+  // deposit.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(OHMFRAXLPBOND_CONTRACT2)), 9)
+  // deposit.amount = amount
+  // deposit.payout = payout
+  // deposit.expires = event.params.expires
+  // deposit.priceInUSD = toDecimal(price, 18)
+  // deposit.token = token.id
+  // deposit.timestamp = transaction.timestamp
+  // deposit.transaction = transaction.id
+  // deposit.totalDepositedDAI = counter.totalDepositedDAI
+  // deposit.totalDepositedETH = counter.totalDepositedETH
+  // deposit.totalDepositedFRAX = counter.totalDepositedFRAX
+  // deposit.totalDepositedLUSD = counter.totalDepositedLUSD
+  // deposit.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
+  // deposit.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
+  // deposit.depositCount = counter.depositCount
+
+  // deposit.save()
 
 }
 

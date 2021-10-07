@@ -241,6 +241,62 @@ dataSources:
           handler: handleControlVariableAdjustment
       file: DAIBondV3\DAIBondV3.wasm
   - kind: ethereum/contract
+    name: OHMDAIBondV3
+    network: mainnet
+    source:
+      address: "0x996668c46fc0b764afda88d83eb58afc933a1626"
+      abi: OHMDAIBondV3
+      startBlock: 13269900
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OHMDAIBondV3
+      abis:
+        - name: OlympusStakingV2
+          file: OHMDAIBondV3\abis\OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: OHMDAIBondV3\abis\OlympusStakingV1.json
+        - name: sOlympusERC20
+          file: OHMDAIBondV3\abis\sOlympusERC20.json
+        - name: sOlympusERC20V2
+          file: OHMDAIBondV3\abis\sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: OHMDAIBondV3\abis\OlympusERC20.json
+        - name: UniswapV2Pair
+          file: OHMDAIBondV3\abis\UniswapV2Pair.json
+        - name: DAIBondV1
+          file: OHMDAIBondV3\abis\DAIBondV1.json
+        - name: DAIBondV2
+          file: OHMDAIBondV3\abis\DAIBondV2.json
+        - name: DAIBondV3
+          file: OHMDAIBondV3\abis\DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: OHMDAIBondV3\abis\OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: OHMDAIBondV3\abis\OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: OHMDAIBondV3\abis\OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: OHMDAIBondV3\abis\OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: OHMDAIBondV3\abis\OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: OHMDAIBondV3\abis\OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: OHMDAIBondV3\abis\FRAXBondV1.json
+        - name: ETHBondV1
+          file: OHMDAIBondV3\abis\ETHBondV1.json
+      eventHandlers:
+        - event: BondCreated(uint256,indexed uint256,indexed uint256,indexed uint256)
+          handler: handleBondCreate
+        - event: BondRedeemed(indexed uint256,indexed uint256)
+          handler: handleBondRedeem
+        - event: BondPriceChanged(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleBondPriceChange
+      file: OHMDAIBondV3\OHMDAIBondV3.wasm
+  - kind: ethereum/contract
     name: OHMDAIBondV4
     network: mainnet
     source:
@@ -298,6 +354,60 @@ dataSources:
         - event: ControlVariableAdjustment(uint256,uint256,uint256,bool)
           handler: handleControlVariableAdjustment
       file: OHMDAIBondV4\OHMDAIBondV4.wasm
+  - kind: ethereum/contract
+    name: OHMFRAXBondV1
+    network: mainnet
+    source:
+      address: "0x539b6c906244ac34e348bbe77885cdfa994a3776"
+      abi: OHMFRAXBondV1
+      startBlock: 13269900
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OHMFRAXBondV1
+      abis:
+        - name: OlympusStakingV2
+          file: OHMFRAXBondV1\abis\OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: OHMFRAXBondV1\abis\OlympusStakingV1.json
+        - name: sOlympusERC20
+          file: OHMFRAXBondV1\abis\sOlympusERC20.json
+        - name: sOlympusERC20V2
+          file: OHMFRAXBondV1\abis\sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: OHMFRAXBondV1\abis\OlympusERC20.json
+        - name: UniswapV2Pair
+          file: OHMFRAXBondV1\abis\UniswapV2Pair.json
+        - name: DAIBondV1
+          file: OHMFRAXBondV1\abis\DAIBondV1.json
+        - name: DAIBondV2
+          file: OHMFRAXBondV1\abis\DAIBondV2.json
+        - name: DAIBondV3
+          file: OHMFRAXBondV1\abis\DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: OHMFRAXBondV1\abis\OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: OHMFRAXBondV1\abis\OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: OHMFRAXBondV1\abis\OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: OHMFRAXBondV1\abis\OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: OHMFRAXBondV1\abis\OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: OHMFRAXBondV1\abis\OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: OHMFRAXBondV1\abis\FRAXBondV1.json
+        - name: ETHBondV1
+          file: OHMFRAXBondV1\abis\ETHBondV1.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(bool)
+          handler: handleRedeem
+      file: OHMFRAXBondV1\OHMFRAXBondV1.wasm
   - kind: ethereum/contract
     name: OHMFRAXBondV2
     network: mainnet
@@ -418,7 +528,7 @@ dataSources:
     name: ETHBondV1
     network: mainnet
     source:
-      address: "0x7464a65aa3fc15a625e2adfb8b340277d804d90d"
+      address: "0xE6295201CD1ff13CeD5f063a5421c39A1D236F1c"
       abi: ETHBondV1
       startBlock: 13269900
     mapping:
