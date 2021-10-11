@@ -13,6 +13,9 @@ import { OHMFRAXLPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMFRAXLPBOND_CONTRACT1 } from
 import { getPairUSD } from './utils/Price'
 import {DepositAddOHMFRAX} from "./utils/YearsDeposit"
 
+/**
+    @dev : Handle OHM-FRAX Bond create
+*/
 
 export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
@@ -22,39 +25,13 @@ export function handleBondCreate(event: BondCreated) : void{
   let price = event.params.priceInUSD
   let deposit = new Deposit(transaction.id)
   let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
-
-  DepositAddOHMFRAX(transaction, token.id, amount, transaction.timestamp)
-
-  // let counter = Deposit.load('1')
-  // if(counter == null)
-  // {
-  //   counter = new Deposit('1')
-  // }
-  // counter.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX.plus(amount)
-  // counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-  // counter.save()
-
-  // deposit.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(OHMFRAXLPBOND_CONTRACT1)), 9)
-  // deposit.amount = amount
-  // deposit.payout = payout
-  // deposit.expires = event.params.expires
-  // deposit.priceInUSD = toDecimal(price, 18)
-  // deposit.token = token.id
-  // deposit.timestamp = transaction.timestamp
-  // deposit.transaction = transaction.id
-  // deposit.totalDepositedDAI = counter.totalDepositedDAI
-  // deposit.totalDepositedETH = counter.totalDepositedETH
-  // deposit.totalDepositedFRAX = counter.totalDepositedFRAX
-  // deposit.totalDepositedLUSD = counter.totalDepositedLUSD
-  // deposit.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
-  // deposit.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
-  // deposit.depositCount = counter.depositCount
-
-  // deposit.save()
+  
+  DepositAddOHMFRAX( token.id, amount, transaction.timestamp)
 
 }
 
 export function handleBondRedeem(event: BondRedeemed) : void{
+  
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
   let token = loadOrCreateToken(OHMFRAXLPBOND_TOKEN)
   let amount = toDecimal(event.params.payout, 9)
@@ -97,41 +74,3 @@ export function handleBondPriceChange(event: BondPriceChanged) : void{
   
   price.save()
 }
-
-
-// export function handleDeposit(call: DepositCall): void {
-// //   let ohmie = loadOrCreateOHMie(call.transaction.from)
-//   let transaction = loadOrCreateTransaction(call.transaction, call.block)
-//   let token = loadOrCreateToken(OHMFRAXLPBOND_TOKEN)
-
-//   let amount = toDecimal(call.inputs._amount, 18)
-//   let deposit = new Deposit(transaction.id)
-//   deposit.transaction = transaction.id
-// //   deposit.ohmie = ohmie.id
-//   deposit.amount = amount
-//   deposit.value = (call.inputs._amount)
-//   deposit.maxPremium = toDecimal(call.inputs._maxPrice)
-//   deposit.token = token.id;
-//   deposit.timestamp = transaction.timestamp;
-//   deposit.save()
-
-//   createDailyBondRecord(deposit.timestamp, token, deposit.amount, deposit.value)
-// //   updateOhmieBalance(ohmie, transaction)
-// }
-
-// export function handleRedeem(call: RedeemCall): void {
-// //   let ohmie = loadOrCreateOHMie(call.transaction.from)
-//   let transaction = loadOrCreateTransaction(call.transaction, call.block)
-  
-//   // let redemption = Redemption.load(transaction.id)
-//   // if (redemption==null){
-//   //   redemption = new Redemption(transaction.id)
-//   // }
-//   let redemption = new Redemption(transaction.id)
-//   redemption.transaction = transaction.id
-// //   redemption.ohmie = ohmie.id
-//   redemption.token = loadOrCreateToken(OHMFRAXLPBOND_TOKEN).id;
-//   redemption.timestamp = transaction.timestamp;
-//   redemption.save()
-// //   updateOhmieBalance(ohmie, transaction)
-// }

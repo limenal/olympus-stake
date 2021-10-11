@@ -7,12 +7,16 @@ import {  StakeCall  } from '../generated/OlympusStakingV2Helper/OlympusStakingV
 import { toDecimal } from "./utils/Decimals"
 // import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
+import { StakeAdd } from './utils/YearStakes'
 
 export function handleStake(call: StakeCall): void {
     // let ohmie = loadOrCreateOHMie(call.from as Address)
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
     let value = toDecimal(call.inputs._amount, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
+    let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+
+    StakeAdd("stake", 'ohm', value, transaction.timestamp, ohm_balance)
 
     // let counter = Stake.load('1')
     // if(counter == null)

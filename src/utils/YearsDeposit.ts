@@ -8,9 +8,14 @@ import {Deposit,DepositMinuteEntity,DepositHourEntity,DepositDayEntity ,
     DepositYearFraxEntity, 
     DepositYearLusdEntity,
     DepositYearOHMDAIEntity, DepositYearOHMFRAXEntity, Token, Transaction} from "../../generated/schema"
-import { SetNonCirculatingOHMAddressesCall } from "../../generated/OlympusStakingV1/CirculatingSupply";
 
-export function DepositAddDAI(transaction: Transaction, token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -23,27 +28,23 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
             year= new DepositYearDaiEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
+
             year.save();
         }else{
             year= new DepositYearDaiEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }
     }else {
         year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
         year.timestamp=timeStamp;
         year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
+        year.token=token;
         year.save();
     }
     
@@ -57,19 +58,18 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = BigInt.fromString('1')
         day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        day.token=token;
+
         day.save();
         days.push(day.id)
         year.dayDeposit = days
+
         year.save()
     }else {
         day.timestamp=timeStamp;
         day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
         day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -80,21 +80,19 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
         hour.timestamp=timeStamp;
         hour.amount=amount;
         hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
+
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
+
         day.save();
     }else {
         hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
 
         hour.timestamp=timeStamp;
         hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -106,20 +104,17 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
 
         minute.depositCount = BigInt.fromString('1')
         minute.amount=amount;
-        // minute.totalDeposit = counter.id
-        minute.token=token;        
+        minute.token=token;      
         minute.save();
+
         minutes.push(minute.id);
         hour.minuteDeposit=minutes;
         hour.save();
     }else {
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
 
@@ -143,7 +138,6 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
         second.timestamp=timeStamp;
         second.amount=amount;
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
         seconds.push(second.id);
         minute.secondDeposit=seconds;
@@ -165,13 +159,18 @@ export function DepositAddDAI(transaction: Transaction, token:string, amount:Big
         second.timestamp=timeStamp;
         second.amount=second.amount.plus(amount);
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
     }
 
 }
 
-export function DepositAddETH(transaction: Transaction, token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddETH(  token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -184,28 +183,23 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
             year= new DepositYearETHEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }else{
             year= new DepositYearETHEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }
     }else {
         year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
-        year.save();
+        year.amount= year.amount.plus(amount)
+        year.token=token
+        year.save()
     }
     
     
@@ -218,8 +212,7 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = BigInt.fromString('1')
         day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        day.token=token;
         day.save();
         days.push(day.id)
         year.dayDeposit = days
@@ -228,9 +221,7 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
         day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -241,9 +232,7 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         hour.timestamp=timeStamp;
         hour.amount=amount;
         hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
@@ -253,9 +242,7 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
 
         hour.timestamp=timeStamp;
         hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -267,7 +254,6 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
 
         minute.depositCount = BigInt.fromString('1')
         minute.amount=amount;
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
         minutes.push(minute.id);
@@ -277,10 +263,8 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
 
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
 
@@ -304,7 +288,6 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         second.timestamp=timeStamp;
         second.amount=amount;
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
         seconds.push(second.id);
         minute.secondDeposit=seconds;
@@ -326,13 +309,17 @@ export function DepositAddETH(transaction: Transaction, token:string, amount:Big
         second.timestamp=timeStamp;
         second.amount=second.amount.plus(amount);
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
     }
 
 }
-
-export function DepositAddFrax(transaction: Transaction,token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddFrax( token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -345,10 +332,8 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
             year= new DepositYearFraxEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }else{
             year= new DepositYearFraxEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
@@ -357,15 +342,13 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
             // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }
     }else {
         year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
         year.timestamp=timeStamp;
         year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
+        year.token=token
         year.save();
     }
     
@@ -379,8 +362,7 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = BigInt.fromString('1')
         day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        day.token=token;
         day.save();
         days.push(day.id)
         year.dayDeposit = days
@@ -389,9 +371,7 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
         day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -402,11 +382,10 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
         hour.timestamp=timeStamp;
         hour.amount=amount;
         hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
         hours.push(hour.id);
+
         day.hourDeposit=hours;
         day.save();
     }else {
@@ -414,9 +393,7 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
 
         hour.timestamp=timeStamp;
         hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -428,20 +405,19 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
 
         minute.depositCount = BigInt.fromString('1')
         minute.amount=amount;
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
+
         minutes.push(minute.id);
+
         hour.minuteDeposit=minutes;
         hour.save();
     }else {
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
 
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
 
@@ -451,17 +427,8 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
     let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
     if(second==null) {
         second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedFRAX = counter.totalDepositedFRAX.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
         
         second.depositCount = BigInt.fromString('1')
-        second.totalDepositedFRAX = counter.totalDepositedFRAX
         second.timestamp=timeStamp;
         second.amount=amount;
         second.token=token;
@@ -473,26 +440,21 @@ export function DepositAddFrax(transaction: Transaction,token:string, amount:Big
     }
     else
     {
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedFRAX = counter.totalDepositedFRAX.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
         
-        second.totalDepositedFRAX = counter.totalDepositedFRAX
         second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
         second.timestamp=timeStamp;
         second.amount=second.amount.plus(amount);
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
     }
 }
-
-export function DepositAddLusd(transaction: Transaction,token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -505,27 +467,22 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
             year= new DepositYearLusdEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }else{
             year= new DepositYearLusdEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
             year.timestamp=timeStamp;
             year.amount=amount;
-            // year.totalDeposit = counter.id
             year.token=token;
             year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
             year.save();
         }
     }else {
         year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
         year.timestamp=timeStamp;
         year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
+        year.token=token;
         year.save();
     }
     
@@ -539,8 +496,7 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = BigInt.fromString('1')
         day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        day.token=token;
         day.save();
         days.push(day.id)
         year.dayDeposit = days
@@ -549,9 +505,7 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         day.timestamp=timeStamp;
         day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
         day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -562,9 +516,7 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         hour.timestamp=timeStamp;
         hour.amount=amount;
         hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
@@ -574,9 +526,7 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
 
         hour.timestamp=timeStamp;
         hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -588,7 +538,6 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
 
         minute.depositCount = BigInt.fromString('1')
         minute.amount=amount;
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
         minutes.push(minute.id);
@@ -598,10 +547,8 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
 
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
 
@@ -625,7 +572,6 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         second.timestamp=timeStamp;
         second.amount=amount;
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
         seconds.push(second.id);
         minute.secondDeposit=seconds;
@@ -651,8 +597,13 @@ export function DepositAddLusd(transaction: Transaction,token:string, amount:Big
         second.save();
     }
 }
-
-export function DepositAddOHMDAI(transaction: Transaction,token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -758,7 +709,6 @@ export function DepositAddOHMDAI(transaction: Transaction,token:string, amount:B
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
 
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
         // minute.totalDeposit = counter.id
@@ -811,8 +761,13 @@ export function DepositAddOHMDAI(transaction: Transaction,token:string, amount:B
         second.save();
     }
 }
-
-export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:BigDecimal, timeStamp:BigInt):void {
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -894,9 +849,7 @@ export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:
 
         hour.timestamp=timeStamp;
         hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -908,7 +861,6 @@ export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:
 
         minute.depositCount = BigInt.fromString('1')
         minute.amount=amount;
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
         minutes.push(minute.id);
@@ -918,10 +870,8 @@ export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
 
-        // minute.profit=minute!=null?minute.profit!=null?profit.plus(minute.profit):toDecimal(BigInt.zero(),0):toDecimal(BigInt.zero(),0);
         minute.timestamp=timeStamp;
         minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
         minute.token=token;        
         minute.save();
 
@@ -945,7 +895,6 @@ export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:
         second.timestamp=timeStamp;
         second.amount=amount;
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
         seconds.push(second.id);
         minute.secondDeposit=seconds;
@@ -967,7 +916,6 @@ export function DepositAddOHMFRAX(transaction: Transaction,token:string, amount:
         second.timestamp=timeStamp;
         second.amount=second.amount.plus(amount);
         second.token=token;
-        // second.totalDeposit = counter.id
         second.save();
     }
 }
