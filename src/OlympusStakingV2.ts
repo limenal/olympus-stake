@@ -8,13 +8,13 @@ import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { StakeAdd } from './utils/YearStakes'
 
-// export function handleStake(call: StakeCall): void {
-//     // let ohmie = loadOrCreateOHMie(call.from as Address)
-//     let transaction = loadOrCreateTransaction(call.transaction, call.block)
-//     let value = toDecimal(call.inputs._amount, 9)
-//     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
-//     let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
-// }
+export function handleStake(call: StakeCall): void {
+    // let ohmie = loadOrCreateOHMie(call.from as Address)
+    let transaction = loadOrCreateTransaction(call.transaction, call.block)
+    let value = toDecimal(call.inputs._amount, 9)
+    let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
+    let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
+}
 
 export function handleUnstake(call: UnstakeCall): void {
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
@@ -23,5 +23,10 @@ export function handleUnstake(call: UnstakeCall): void {
     let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
 
     StakeAdd("unstake", 'ohm', value, transaction.timestamp, ohm_balance)
-
+    let unstake = new Unstake(transaction.id)
+    unstake.amount = value
+    unstake.currentStaked = ohm_balance
+    unstake.transaction = transaction.id
+    unstake.timestamp = transaction.timestamp
+    unstake.save()
 }

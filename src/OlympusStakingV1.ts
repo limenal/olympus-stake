@@ -25,7 +25,12 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     let value = toDecimal(call.inputs.amountToWithdraw_, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
     let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
-
     StakeAdd("unstake", 'ohm', value, transaction.timestamp, ohm_balance)
 
+    let unstake = new Unstake(transaction.id)
+    unstake.amount = value
+    unstake.currentStaked = ohm_balance
+    unstake.transaction = transaction.id
+    unstake.timestamp = transaction.timestamp
+    unstake.save()
 }

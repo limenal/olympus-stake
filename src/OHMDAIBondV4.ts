@@ -18,7 +18,7 @@ export function handleBondCreate(event: BondCreated) : void{
   let amount = toDecimal(event.params.deposit, 18)
   let deposit = new Deposit(transaction.id)
 
-  DepositAddOHMDAI( token.id, amount, transaction.timestamp)
+  DepositAddOHMDAI( 'deposit', token.id, amount, transaction.timestamp)
 
   deposit.save()
 
@@ -28,26 +28,9 @@ export function handleBondRedeem(event: BondRedeemed) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
   let token = loadOrCreateToken(OHMDAILPBOND_TOKEN)
   let amount = toDecimal(event.params.payout, 9)
-  let remaining = event.params.remaining;
   let redeem = new Redemption(transaction.id)
-  let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
-  let counter = Redemption.load('1')
-  if(counter == null)
-  {
-      counter = new Redemption('1')
-  }
-  counter.totalRedeemd = counter.totalRedeemd.plus(amount)
-  counter.save()
-  
-  
-  redeem.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(OHMDAISLPBOND_CONTRACT4)), 9)
-  redeem.token = token.id
-  redeem.timestamp = transaction.timestamp
-  redeem.payout = amount
-  redeem.totalRedeemd = counter.totalRedeemd
-  redeem.transaction = transaction.id
-
+  DepositAddOHMDAI('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 

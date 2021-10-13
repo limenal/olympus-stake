@@ -21,35 +21,18 @@ export function handleBondCreate(event: BondCreated) : void{
   let price = event.params.priceInUSD
   let deposit = new Deposit(transaction.id)
   let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
-
-  DepositAddFrax( token.id, amount, transaction.timestamp)
-
+  
+  DepositAddFrax('deposit', token.id, amount, transaction.timestamp)
+  deposit.save()
 }
 
 export function handleBondRedeem(event: BondRedeemed) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
   let token = loadOrCreateToken(FRAXBOND_TOKEN)
   let amount = toDecimal(event.params.payout, 9)
-  let remaining = event.params.remaining;
   let redeem = new Redemption(transaction.id)
-  let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
-  let counter = Redemption.load('1')
-  if(counter == null)
-  {
-      counter = new Redemption('1')
-  }
-  counter.totalRedeemd = counter.totalRedeemd.plus(amount)
-  counter.save()
-  
-  
-  redeem.ohmReserve = toDecimal(ohm_contract.balanceOf(Address.fromString(FRAXBOND_CONTRACT1)), 9)
-  redeem.token = token.id
-  redeem.timestamp = transaction.timestamp
-  redeem.payout = amount
-  redeem.totalRedeemd = counter.totalRedeemd
-  redeem.transaction = transaction.id
-
+  DepositAddFrax('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 

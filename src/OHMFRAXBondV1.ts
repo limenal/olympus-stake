@@ -20,14 +20,11 @@ import {DepositAddOHMFRAX} from "./utils/YearsDeposit"
 export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
   let token = loadOrCreateToken(OHMFRAXLPBOND_TOKEN)
-  let amount = toDecimal(event.params.deposit, 18)
-  let payout = toDecimal(event.params.payout, 9)
-  let price = event.params.priceInUSD
-  let deposit = new Deposit(transaction.id)
-  let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
-  
-  DepositAddOHMFRAX( token.id, amount, transaction.timestamp)
+  let amount = toDecimal(event.params.payout, 9)
+  let redeem = new Redemption(transaction.id)
 
+  DepositAddOHMFRAX('redeem', token.id, amount, transaction.timestamp)
+  redeem.save()
 }
 
 export function handleBondRedeem(event: BondRedeemed) : void{

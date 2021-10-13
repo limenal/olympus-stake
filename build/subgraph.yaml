@@ -194,7 +194,7 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - DAIBondDeposit
+        - DAIBondV3
       abis:
         - name: OlympusStakingV2
           file: DAIBondV3\abis\OlympusStakingV2.json

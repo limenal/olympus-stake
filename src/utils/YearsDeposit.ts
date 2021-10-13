@@ -15,35 +15,43 @@ import {Deposit,DepositMinuteEntity,DepositHourEntity,DepositDayEntity ,
      * @param amount - Amount of tokens to deposit
      * @param timeStamp - Timestamp of transaction block
 */
-export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt):void {
+export function DepositAddDAI(type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
     const date: Date = new Date( number);
 
     let year = DepositYearDaiEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-    let lastYear =  DepositYearDaiEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
     if(year==null){
-        if(lastYear==null){
-            year= new DepositYearDaiEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-
-            year.save();
-        }else{
-            year= new DepositYearDaiEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }
-    }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+        year= new DepositYearDaiEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
+        if(type === "deposit")
+        {
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
+        }
+        year.token=token;
+        
+        year.save();
+        
+    }else {
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
         year.token=token;
         year.save();
     }
@@ -56,8 +64,16 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
     if(day==null){
         day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
         day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
+        if(type === "deposit")
+        {
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
         day.token=token;
 
         day.save();
@@ -67,8 +83,16 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
         year.save()
     }else {
         day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
         day.token=token;        
         day.save();
     }
@@ -78,8 +102,17 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
     if(hour==null) {
         hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
         hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
         hour.token=token;        
 
         hour.save();
@@ -88,10 +121,18 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
 
         day.save();
     }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
 
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
         hour.token=token;        
         hour.save();
     }
@@ -102,8 +143,17 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
         minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
         minute.timestamp=timeStamp;
 
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
         minute.token=token;      
         minute.save();
 
@@ -114,54 +164,22 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
         minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
         minute.token=token;        
         minute.save();
 
     }
-
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedDAI = counter.totalDepositedDAI.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.depositCount = BigInt.fromString('1')
-        second.totalDepositedDAI = counter.totalDepositedDAI
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
-    }
-    else
-    {
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedDAI = counter.totalDepositedDAI.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.totalDepositedDAI = counter.totalDepositedDAI
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        second.save();
-    }
-
 }
 
 /**
@@ -170,318 +188,43 @@ export function DepositAddDAI(token:string, amount:BigDecimal, timeStamp:BigInt)
      * @param amount - Amount of tokens to deposit
      * @param timeStamp - Timestamp of transaction block
 */
-export function DepositAddETH(  token:string, amount:BigDecimal, timeStamp:BigInt):void {
+export function DepositAddETH(type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
     const date: Date = new Date( number);
 
     let year = DepositYearETHEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-    let lastYear =  DepositYearETHEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
     if(year==null){
-        if(lastYear==null){
-            year= new DepositYearETHEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }else{
-            year= new DepositYearETHEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }
-    }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+        year= new DepositYearETHEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount)
-        year.token=token
-        year.save()
-    }
-    
-    
-    let days = year.dayDeposit;
-    
-    let day=DepositDayEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
-    
-    if(day==null){
-        day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
-        day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
-        day.token=token;
-        day.save();
-        days.push(day.id)
-        year.dayDeposit = days
-        year.save()
-    }else {
-        day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
-        day.token=token;        
-        day.save();
-    }
-    
-    let hours = day.hourDeposit;
-    let hour = DepositHourEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
-    if(hour==null) {
-        hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
-        hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
-        hour.token=token;        
-        hour.save();
-        hours.push(hour.id);
-        day.hourDeposit=hours;
-        day.save();
-    }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
-
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
-        hour.token=token;        
-        hour.save();
-    }
-    
-    let minutes= hour.minuteDeposit;
-    let minute =DepositMinuteEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
-    if(minute==null) {
-        minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
-        minute.timestamp=timeStamp;
-
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
-        minute.token=token;        
-        minute.save();
-        minutes.push(minute.id);
-        hour.minuteDeposit=minutes;
-        hour.save();
-    }else {
-        
-        minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
-        minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
-        minute.token=token;        
-        minute.save();
-
-    }
-
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
+        if(type === "deposit")
         {
-            counter = new Deposit('1')
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
         }
-        counter.totalDepositedETH = counter.totalDepositedETH.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.depositCount = BigInt.fromString('1')
-        second.totalDepositedETH = counter.totalDepositedETH
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
-    }
-    else
-    {
-        let counter = Deposit.load('1')
-        if(counter == null)
+        else
         {
-            counter = new Deposit('1')
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
         }
-        counter.totalDepositedETH = counter.totalDepositedETH.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
+        year.token=token;
         
-        second.totalDepositedETH = counter.totalDepositedETH
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        second.save();
-    }
-
-}
-/**
-     * @dev : Add deposits to graph
-     * @param token - Deposit token
-     * @param amount - Amount of tokens to deposit
-     * @param timeStamp - Timestamp of transaction block
-*/
-export function DepositAddFrax( token:string, amount:BigDecimal, timeStamp:BigInt):void {
-
-    let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
-    number*=1000;
-    const date: Date = new Date( number);
-
-    let year = DepositYearFraxEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-    let lastYear =  DepositYearFraxEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
-    if(year==null){
-        if(lastYear==null){
-            year= new DepositYearFraxEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }else{
-            year= new DepositYearFraxEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            // year.totalDeposit = counter.id
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }
-    }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
-        year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
-        year.token=token
         year.save();
-    }
-    
-    
-    let days = year.dayDeposit;
-    
-    let day=DepositDayEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
-    
-    if(day==null){
-        day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
-        day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
-        day.token=token;
-        day.save();
-        days.push(day.id)
-        year.dayDeposit = days
-        year.save()
-    }else {
-        day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
-        day.token=token;        
-        day.save();
-    }
-    
-    let hours = day.hourDeposit;
-    let hour = DepositHourEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
-    if(hour==null) {
-        hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
-        hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
-        hour.token=token;        
-        hour.save();
-        hours.push(hour.id);
-
-        day.hourDeposit=hours;
-        day.save();
-    }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
-
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
-        hour.token=token;        
-        hour.save();
-    }
-    
-    let minutes= hour.minuteDeposit;
-    let minute =DepositMinuteEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
-    if(minute==null) {
-        minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
-        minute.timestamp=timeStamp;
-
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
-        minute.token=token;        
-        minute.save();
-
-        minutes.push(minute.id);
-
-        hour.minuteDeposit=minutes;
-        hour.save();
-    }else {
         
-        minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
-        minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
-        minute.token=token;        
-        minute.save();
-
-    }
-
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        
-        second.depositCount = BigInt.fromString('1')
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        // second.totalDeposit = counter.id
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
-    }
-    else
-    {
-        
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        second.save();
-    }
-}
-/**
-     * @dev : Add deposits to graph
-     * @param token - Deposit token
-     * @param amount - Amount of tokens to deposit
-     * @param timeStamp - Timestamp of transaction block
-*/
-export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigInt):void {
-
-    let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
-    number*=1000;
-    const date: Date = new Date( number);
-
-    let year = DepositYearLusdEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-    let lastYear =  DepositYearLusdEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
-    if(year==null){
-        if(lastYear==null){
-            year= new DepositYearLusdEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }else{
-            year= new DepositYearLusdEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            year.save();
-        }
     }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
         year.token=token;
         year.save();
     }
@@ -494,17 +237,35 @@ export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigIn
     if(day==null){
         day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
         day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
+        if(type === "deposit")
+        {
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
         day.token=token;
+
         day.save();
         days.push(day.id)
         year.dayDeposit = days
+
         year.save()
     }else {
         day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
         day.token=token;        
         day.save();
     }
@@ -514,18 +275,37 @@ export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigIn
     if(hour==null) {
         hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
         hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
         hour.token=token;        
+
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
+
         day.save();
     }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
 
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
         hour.token=token;        
         hour.save();
     }
@@ -536,65 +316,42 @@ export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigIn
         minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
         minute.timestamp=timeStamp;
 
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
-        minute.token=token;        
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
+        minute.token=token;      
         minute.save();
+
         minutes.push(minute.id);
         hour.minuteDeposit=minutes;
         hour.save();
     }else {
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
         minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
         minute.token=token;        
         minute.save();
 
-    }
-
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedLUSD = counter.totalDepositedLUSD.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.depositCount = BigInt.fromString('1')
-        second.totalDepositedLUSD = counter.totalDepositedLUSD
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
-    }
-    else
-    {
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedLUSD = counter.totalDepositedLUSD.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.totalDepositedLUSD = counter.totalDepositedLUSD
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        // second.totalDeposit = counter.id
-        second.save();
     }
 }
 /**
@@ -603,40 +360,44 @@ export function DepositAddLusd( token:string, amount:BigDecimal, timeStamp:BigIn
      * @param amount - Amount of tokens to deposit
      * @param timeStamp - Timestamp of transaction block
 */
-export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:BigInt):void {
+export function DepositAddFrax(type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
     const date: Date = new Date( number);
 
-    let year = DepositYearOHMDAIEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-    let lastYear =  DepositYearOHMDAIEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
+    let year = DepositYearFraxEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
     if(year==null){
-        if(lastYear==null){
-            year= new DepositYearOHMDAIEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            // year.totalDeposit = counter.id
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
-            year.save();
-        }else{
-            year= new DepositYearOHMDAIEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            // year.totalDeposit = counter.id
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
-            year.save();
-        }
-    }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+        year= new DepositYearFraxEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
+        if(type === "deposit")
+        {
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
+        }
+        year.token=token;
+        
+        year.save();
+        
+    }else {
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
+        year.token=token;
         year.save();
     }
     
@@ -648,21 +409,36 @@ export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:Big
     if(day==null){
         day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
         day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        if(type === "deposit")
+        {
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
+        day.token=token;
+
         day.save();
         days.push(day.id)
         year.dayDeposit = days
+
         year.save()
     }else {
         day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -671,23 +447,38 @@ export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:Big
     if(hour==null) {
         hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
         hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
         hour.token=token;        
-        // year.sender.push(sender);
+
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
+
         day.save();
     }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
 
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
-        // hour.totalDeposit = counter.id
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
         hour.token=token;        
-        // year.sender.push(sender);
         hour.save();
     }
     
@@ -697,68 +488,389 @@ export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:Big
         minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
         minute.timestamp=timeStamp;
 
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
-        // minute.totalDeposit = counter.id
-        minute.token=token;        
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
+        minute.token=token;      
         minute.save();
+
         minutes.push(minute.id);
         hour.minuteDeposit=minutes;
         hour.save();
     }else {
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
         minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
-        // minute.totalDeposit = counter.id
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
         minute.token=token;        
         minute.save();
 
     }
 
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
+}
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddLusd(type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
+
+    let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
+    number*=1000;
+    const date: Date = new Date( number);
+
+    let year = DepositYearLusdEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
+    let lastYear =  DepositYearLusdEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
+    if(year==null){
+        year= new DepositYearLusdEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
+        year.timestamp=timeStamp;
+        if(type === "deposit")
         {
-            counter = new Deposit('1')
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
         }
-        counter.totalDepositedOHMDAI = counter.totalDepositedOHMDAI.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
+        else
+        {
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
+        }
+        year.token=token;
         
-        second.depositCount = BigInt.fromString('1')
-        second.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        // second.totalDeposit = counter.id
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
+        year.save();
+        
+    }else {
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
+        year.token=token;
+        year.save();
     }
-    else
-    {
-        let counter = Deposit.load('1')
-        if(counter == null)
+    
+    
+    let days = year.dayDeposit;
+    
+    let day=DepositDayEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
+    
+    if(day==null){
+        day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
+        day.timestamp=timeStamp;
+        if(type === "deposit")
         {
-            counter = new Deposit('1')
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
         }
-        counter.totalDepositedOHMDAI = counter.totalDepositedOHMDAI.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
+        day.token=token;
+
+        day.save();
+        days.push(day.id)
+        year.dayDeposit = days
+
+        year.save()
+    }else {
+        day.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
+        day.token=token;        
+        day.save();
+    }
+    
+    let hours = day.hourDeposit;
+    let hour = DepositHourEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
+    if(hour==null) {
+        hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
+        hour.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
+        hour.token=token;        
+
+        hour.save();
+        hours.push(hour.id);
+        day.hourDeposit=hours;
+
+        day.save();
+    }else {
+
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
+        hour.token=token;        
+        hour.save();
+    }
+    
+    let minutes= hour.minuteDeposit;
+    let minute =DepositMinuteEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
+    if(minute==null) {
+        minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
+        minute.timestamp=timeStamp;
+
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
+        minute.token=token;      
+        minute.save();
+
+        minutes.push(minute.id);
+        hour.minuteDeposit=minutes;
+        hour.save();
+    }else {
         
-        second.totalDepositedOHMDAI = counter.totalDepositedOHMDAI
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        // second.totalDeposit = counter.id
-        second.save();
+        minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+        minute.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
+        minute.token=token;        
+        minute.save();
+
+    }
+
+}
+/**
+     * @dev : Add deposits to graph
+     * @param token - Deposit token
+     * @param amount - Amount of tokens to deposit
+     * @param timeStamp - Timestamp of transaction block
+*/
+export function DepositAddOHMDAI( type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
+
+    let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
+    number*=1000;
+    const date: Date = new Date( number);
+
+    let year = DepositYearOHMDAIEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
+    if(year==null){
+        year= new DepositYearOHMDAIEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
+        }
+        year.token=token;
+        
+        year.save();
+        
+    }else {
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
+        year.token=token;
+        year.save();
+    }
+    
+    
+    let days = year.dayDeposit;
+    
+    let day=DepositDayEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
+    
+    if(day==null){
+        day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
+        day.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
+        day.token=token;
+
+        day.save();
+        days.push(day.id)
+        year.dayDeposit = days
+
+        year.save()
+    }else {
+        day.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
+        day.token=token;        
+        day.save();
+    }
+    
+    let hours = day.hourDeposit;
+    let hour = DepositHourEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
+    if(hour==null) {
+        hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
+        hour.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
+        hour.token=token;        
+
+        hour.save();
+        hours.push(hour.id);
+        day.hourDeposit=hours;
+
+        day.save();
+    }else {
+
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
+        hour.token=token;        
+        hour.save();
+    }
+    
+    let minutes= hour.minuteDeposit;
+    let minute =DepositMinuteEntity.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
+    if(minute==null) {
+        minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
+        minute.timestamp=timeStamp;
+
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
+        minute.token=token;      
+        minute.save();
+
+        minutes.push(minute.id);
+        hour.minuteDeposit=minutes;
+        hour.save();
+    }else {
+        
+        minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+        minute.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
+        minute.token=token;        
+        minute.save();
+
     }
 }
 /**
@@ -767,7 +879,7 @@ export function DepositAddOHMDAI( token:string, amount:BigDecimal, timeStamp:Big
      * @param amount - Amount of tokens to deposit
      * @param timeStamp - Timestamp of transaction block
 */
-export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:BigInt):void {
+export function DepositAddOHMFRAX(type:string, token:string, amount:BigDecimal, timeStamp:BigInt):void {
 
     let number:i64 =Number.parseInt(timeStamp.toString(),10) as i64;
     number*=1000;
@@ -776,31 +888,36 @@ export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:Bi
     let year = DepositYearOHMFRAXEntity.load(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
     let lastYear =  DepositYearOHMFRAXEntity.load(token+(date.getUTCFullYear()-1).toString()+DEPOSIT_SUFFIX);
     if(year==null){
-        if(lastYear==null){
-            year= new DepositYearOHMFRAXEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            // year.totalDeposit = counter.id
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
-            year.save();
-        }else{
-            year= new DepositYearOHMFRAXEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
-            year.timestamp=timeStamp;
-            year.amount=amount;
-            // year.totalDeposit = counter.id
-            year.token=token;
-            year.depositCount = BigInt.fromString('1')
-            // year.sender.push(sender);
-            year.save();
-        }
-    }else {
-        year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+        year= new DepositYearOHMFRAXEntity(token+date.getUTCFullYear().toString()+DEPOSIT_SUFFIX);
         year.timestamp=timeStamp;
-        year.amount= year.amount.plus(amount);
-        // year.totalDeposit = counter.id
-        year.token=token;        // year.sender.push(sender);
+        if(type === "deposit")
+        {
+            year.amount=amount;
+            year.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            year.payout = amount
+            year.redeemCount = BigInt.fromString('1')
+        }
+        year.token=token;
+        
+        year.save();
+        
+    }else {
+        year.timestamp=timeStamp;
+        if(type === "deposit")
+        {
+            year.amount= year.amount.plus(amount);
+            year.depositCount = year.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            year.payout = year.payout.plus(amount)
+            year.redeemCount = year.redeemCount.plus(BigInt.fromString('1'))
+        }
+        year.token=token;
         year.save();
     }
     
@@ -812,21 +929,36 @@ export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:Bi
     if(day==null){
         day = new DepositDayEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+DEPOSIT_SUFFIX);
         day.timestamp=timeStamp;
-        day.depositCount = BigInt.fromString('1')
-        day.amount=amount;
-        // day.totalDeposit = counter.id
-        day.token=token;        // year.sender.push(sender);
+        if(type === "deposit")
+        {
+            day.amount=amount;
+            day.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            day.payout = amount
+            day.redeemCount = BigInt.fromString('1')
+        }        
+        day.token=token;
+
         day.save();
         days.push(day.id)
         year.dayDeposit = days
+
         year.save()
     }else {
         day.timestamp=timeStamp;
-        day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
-        day.amount=day.amount.plus(amount);
-        // day.totalDeposit = counter.id
+        if(type === "deposit")
+        {
+            day.amount= day.amount.plus(amount);
+            day.depositCount = day.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            day.payout = day.payout.plus(amount)
+            day.redeemCount = day.redeemCount.plus(BigInt.fromString('1'))
+        }
         day.token=token;        
-        // year.sender.push(sender);
         day.save();
     }
     
@@ -835,20 +967,37 @@ export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:Bi
     if(hour==null) {
         hour = new DepositHourEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+DEPOSIT_SUFFIX);
         hour.timestamp=timeStamp;
-        hour.amount=amount;
-        hour.depositCount = BigInt.fromString('1')
-        // hour.totalDeposit = counter.id
+        if(type === "deposit")
+        {
+            hour.amount=amount;
+            hour.depositCount = BigInt.fromString('1')
+
+        }
+        else
+        {
+            hour.payout = amount
+            hour.redeemCount = BigInt.fromString('1')
+        }
         hour.token=token;        
-        // year.sender.push(sender);
+
         hour.save();
         hours.push(hour.id);
         day.hourDeposit=hours;
+
         day.save();
     }else {
-        hour.depositCount =hour.depositCount.plus(BigInt.fromString('1'))
 
-        hour.timestamp=timeStamp;
-        hour.amount=hour.amount.plus(amount);
+        hour.timestamp = timeStamp;
+        if(type === "deposit")
+        {
+            hour.amount= hour.amount.plus(amount);
+            hour.depositCount = hour.depositCount.plus(BigInt.fromString('1'))
+        }
+        else
+        {
+            hour.payout = hour.payout.plus(amount)
+            hour.redeemCount = hour.redeemCount.plus(BigInt.fromString('1'))
+        }
         hour.token=token;        
         hour.save();
     }
@@ -859,63 +1008,42 @@ export function DepositAddOHMFRAX( token:string, amount:BigDecimal, timeStamp:Bi
         minute = new DepositMinuteEntity(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+DEPOSIT_SUFFIX);
         minute.timestamp=timeStamp;
 
-        minute.depositCount = BigInt.fromString('1')
-        minute.amount=amount;
-        minute.token=token;        
+        if(type === "deposit")
+        {
+            minute.amount=amount;
+            minute.depositCount = BigInt.fromString('1')
+        }
+        else
+        {
+            minute.payout = amount
+            minute.redeemCount = BigInt.fromString('1')
+
+        }
+        minute.token=token;      
         minute.save();
+
         minutes.push(minute.id);
         hour.minuteDeposit=minutes;
         hour.save();
     }else {
         
         minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
-
         minute.timestamp=timeStamp;
-        minute.amount=minute.amount.plus(minute.amount);
+        if(type === "deposit")
+        {
+            minute.amount= minute.amount.plus(amount);
+            minute.depositCount = minute.depositCount.plus(BigInt.fromString('1'))
+
+        }
+        else
+        {
+            minute.payout = minute.payout.plus(amount)
+            minute.redeemCount = minute.redeemCount.plus(BigInt.fromString('1'))
+
+        }
         minute.token=token;        
         minute.save();
 
     }
 
-    let seconds = minute.secondDeposit;
-    let second =Deposit.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);//getUTCSeconds
-    if(second==null) {
-        second = new Deposit(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+"-"+date.getUTCSeconds().toString()+DEPOSIT_SUFFIX);
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.depositCount = BigInt.fromString('1')
-        second.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
-        second.timestamp=timeStamp;
-        second.amount=amount;
-        second.token=token;
-        second.save();
-        seconds.push(second.id);
-        minute.secondDeposit=seconds;
-        minute.save();
-    }
-    else
-    {
-        let counter = Deposit.load('1')
-        if(counter == null)
-        {
-            counter = new Deposit('1')
-        }
-        counter.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX.plus(amount)
-        counter.depositCount = counter.depositCount.plus(BigInt.fromString('1'))
-        counter.save()
-        
-        second.totalDepositedOHMFRAX = counter.totalDepositedOHMFRAX
-        second.depositCount = second.depositCount.plus(BigInt.fromString('1'))
-        second.timestamp=timeStamp;
-        second.amount=second.amount.plus(amount);
-        second.token=token;
-        second.save();
-    }
 }
