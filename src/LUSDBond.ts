@@ -7,7 +7,7 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateToken } from './utils/Tokens'
 import { LUSDBOND_TOKEN, OHM_ERC20_CONTRACT, LUSDBOND_CONTRACT1 } from './utils/Constants'
-import {DepositAddLusd} from "./utils/YearsDeposit"
+import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 /**
     @dev : Handle LUSD Bond create
@@ -21,7 +21,7 @@ export function handleBondCreate(event: BondCreated) : void{
     let deposit = new Deposit(transaction.id)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
     
-    DepositAddLusd('deposit', token.id, amount, transaction.timestamp)  
+    DepositAdd('deposit', token.id, amount, transaction.timestamp)  
     deposit.save()
 }
   
@@ -31,7 +31,7 @@ export function handleBondCreate(event: BondCreated) : void{
     let amount = toDecimal(event.params.payout, 9)
     let redeem = new Redemption(transaction.id)
   
-    DepositAddLusd('redeem', token.id, amount, transaction.timestamp)
+    DepositAdd('redeem', token.id, amount, transaction.timestamp)
     redeem.save()
   }
   
@@ -66,4 +66,6 @@ export function handleBondCreate(event: BondCreated) : void{
     variable.addition = event.params.addition
   
     variable.save()
+    ControlVariableAdd('control', 'LUSD', toDecimal(event.params.initialBCV, 9), toDecimal(event.params.newBCV, 9), toDecimal(event.params.adjustment, 9), event.params.addition, transaction.timestamp)
+
   }

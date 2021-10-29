@@ -55,9 +55,9 @@ export function RebaseAdd(timeStamp:BigInt, ohmStaked: BigDecimal, amount: BigDe
         year.save()
     }else {
         day.timestamp=timeStamp;      
-        day.amount = day.profit.plus(amount);
-        day.amountUSD = day.profit.plus(amountUSD)
-        day.stakedOhms = day.profit.plus(ohmStaked)
+        day.amount = day.amount.plus(amount);
+        day.amountUSD = day.amountUSD.plus(amountUSD)
+        day.stakedOhms = day.stakedOhms.plus(ohmStaked)
         day.percentage = day.amount.div(day.stakedOhms)
 
         day.save();

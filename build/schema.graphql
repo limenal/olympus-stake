@@ -38,12 +38,6 @@ type DepositYearDaiEntity @entity
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -62,12 +56,6 @@ type DepositYearETHEntity @entity
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -86,12 +74,6 @@ type DepositYearFraxEntity @entity
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -110,36 +92,28 @@ type DepositYearLusdEntity @entity
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
 }
 
-type DepositYearOHMDAIEntity @entity
+type DepositYearEntity @entity
 { 
   id: ID!
   transaction: Transaction
   amount: BigDecimal!
   maxPremium: BigDecimal!
   payout: BigDecimal!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   expires: BigInt!
   priceInUSD: BigDecimal!
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -158,12 +132,24 @@ type DepositYearOHMFRAXEntity @entity
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
+  depositCount: BigInt!
+  redeemCount: BigInt!
+  dayDeposit:[DepositDayEntity!]!
+}
+
+type DepositYearOHMLUSDEntity @entity
+{ 
+  id: ID!
+  transaction: Transaction
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  payout: BigDecimal!
+  expires: BigInt!
+  priceInUSD: BigDecimal!
+  token: Token
+  value: BigDecimal!
+  timestamp: BigInt!
+  ohmReserve: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -179,15 +165,13 @@ type DepositDayEntity @entity
   expires: BigInt!
   priceInUSD: BigDecimal!
   token: Token
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   hourDeposit:[DepositHourEntity!]!
@@ -205,13 +189,11 @@ type DepositHourEntity @entity
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   minuteDeposit:[DepositMinuteEntity!]!
@@ -229,13 +211,11 @@ type DepositMinuteEntity @entity
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   secondDeposit:[Deposit!]!
@@ -373,6 +353,7 @@ type Stake @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
+  from: Bytes!
   ohmie: Ohmie!
   timestamp: BigInt!
 }
@@ -385,6 +366,7 @@ type Unstake @entity {
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
   amount: BigDecimal!
+  from: Bytes!
   timestamp: BigInt!
 }
 

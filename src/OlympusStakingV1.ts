@@ -17,7 +17,13 @@ export function handleStake(call: StakeOHMCall): void {
 
 
     StakeAdd("stake", 'ohm', value, transaction.timestamp, ohm_balance)
-
+    let stake = new Stake(transaction.id)
+    stake.amountStaked = value
+    stake.from = transaction.from
+    stake.currentStaked = ohm_balance
+    stake.timestamp = transaction.timestamp
+    stake.transaction = transaction.id
+    stake.save()
 }
 
 export function handleUnstake(call: UnstakeOHMCall): void {
@@ -31,6 +37,7 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     unstake.amount = value
     unstake.currentStaked = ohm_balance
     unstake.transaction = transaction.id
+    unstake.from = transaction.from
     unstake.timestamp = transaction.timestamp
     unstake.save()
 }

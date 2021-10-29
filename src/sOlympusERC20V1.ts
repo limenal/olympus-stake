@@ -18,11 +18,17 @@ export function rebaseFunction(call: RebaseCall): void {
     let stakedOhms = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
     let timestamp = transaction.timestamp
     let amountUSD = amount.times(getOHMUSDRate())
-    let rebase = new Rebase(transaction.id)
-
-    RebaseAdd(timestamp, stakedOhms, amount, amountUSD)
-    rebase.amount = amount
-    rebase.amountUSD = amountUSD
-    rebase.save()
+    var rebase = Rebase.load(transaction.id)
+    if(rebase === null && call.inputs.olyProfit.gt(BigInt.fromI32(0)))
+    {
+        RebaseAdd(timestamp, stakedOhms, amount, amountUSD)
+        let rebase = new Rebase(transaction.id)
+        rebase.amount = amount
+        rebase.amountUSD = amountUSD
+        rebase.percentage = amount.div(stakedOhms)
+        rebase.timestamp = timestamp
+        rebase.save()
+    
+    }
 
 }

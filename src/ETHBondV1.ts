@@ -8,7 +8,7 @@ import { toDecimal } from "./utils/Decimals"
 import { ETHBOND_TOKEN, OHM_ERC20_CONTRACT, ETHBOND_CONTRACT1} from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
-import {DepositAddETH} from "./utils/YearsDeposit"
+import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 // import { getETHUSDRate } from './utils/Price'
 /**
@@ -21,7 +21,7 @@ export function handleBondCreate(event: BondCreated) : void{
   let amount = toDecimal(event.params.deposit, 18)
   let deposit = new Deposit(transaction.id)
 
-  DepositAddETH('deposit', token.id, amount, transaction.timestamp)
+  DepositAdd('deposit', token.id, amount, transaction.timestamp)
 
   deposit.save()
 }
@@ -32,7 +32,7 @@ export function handleBondRedeem(event: BondRedeemed) : void{
   let amount = toDecimal(event.params.payout, 9)
   let redeem = new Redemption(transaction.id)
 
-  DepositAddETH('redeem', token.id, amount, transaction.timestamp)
+  DepositAdd('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 
@@ -67,4 +67,6 @@ export function handleControlVariableAdjustment(event: ControlVariableAdjustment
   variable.addition = event.params.addition
 
   variable.save()
+  ControlVariableAdd('control', 'WETH', toDecimal(event.params.initialBCV, 9), toDecimal(event.params.newBCV, 9), toDecimal(event.params.adjustment, 9), event.params.addition, transaction.timestamp)
+
 }

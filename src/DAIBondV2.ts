@@ -10,7 +10,7 @@ import { DAIBOND_TOKEN, OHM_ERC20_CONTRACT, DAIBOND_CONTRACTS2} from './utils/Co
 import { loadOrCreateToken } from './utils/Tokens'
 import { loadOrCreateRedemption } from './utils/Redemption'
 import { createDailyBondRecord } from './utils/DailyBond'
-import {DepositAddDAI} from "./utils/YearsDeposit"
+import {DepositAdd} from "./utils/YearsDeposit"
 
 /**
 
@@ -20,7 +20,7 @@ export function handleBondCreate(event: BondCreated) : void{
   let transaction = loadOrCreateTransaction(event.transaction, event.block)
   let token = loadOrCreateToken(DAIBOND_TOKEN)
   let amount = toDecimal(event.params.deposit, 18)
-  DepositAddDAI('deposit', token.id, amount, transaction.timestamp)
+  DepositAdd('deposit', token.id, amount, transaction.timestamp)
 
 }
 
@@ -30,7 +30,7 @@ export function handleBondRedeem(event: BondRedeemed) : void{
   let amount = toDecimal(event.params.payout, 9)
   let redeem = new Redemption(transaction.id)
 
-  DepositAddDAI('redeem', token.id, amount, transaction.timestamp)
+  DepositAdd('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 

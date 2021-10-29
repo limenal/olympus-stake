@@ -1,169 +1,20 @@
-type DailyBond @entity {
-  id: ID!
-  timestamp: BigInt!
-  token: Token!
-  amount: BigDecimal!
-  value: BigDecimal!
-}
-
-type Ohmie @entity {
-  id: ID!
-  historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
-  lastBalance: OhmieBalance
-  active: Boolean!
-}
-
-type OhmieBalance @entity {
-  id: ID!
-  ohmie: Ohmie!
-  sohmBalance: BigDecimal!
-  ohmBalance: BigDecimal!
-  bondBalance: BigDecimal!
-  dollarBalance: BigDecimal!
-  stakes: [ContractInfo!]
-  bonds: [ContractInfo!]
-  timestamp: BigInt!
-}
-
-type DepositYearDaiEntity @entity
+type DepositYearEntity @entity
 { 
   id: ID!
   transaction: Transaction
   amount: BigDecimal!
   maxPremium: BigDecimal!
   payout: BigDecimal!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   expires: BigInt!
   priceInUSD: BigDecimal!
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearETHEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearFraxEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearLusdEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearOHMDAIEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearOHMFRAXEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   dayDeposit:[DepositDayEntity!]!
@@ -179,15 +30,13 @@ type DepositDayEntity @entity
   expires: BigInt!
   priceInUSD: BigDecimal!
   token: Token
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   value: BigDecimal!
   timestamp: BigInt!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   hourDeposit:[DepositHourEntity!]!
@@ -205,13 +54,11 @@ type DepositHourEntity @entity
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   minuteDeposit:[DepositMinuteEntity!]!
@@ -229,13 +76,11 @@ type DepositMinuteEntity @entity
   token: Token
   value: BigDecimal!
   timestamp: BigInt!
+  newBCV: BigDecimal!
+  initBCV: BigDecimal!
+  addition: Boolean!
+  adjustment: BigDecimal!
   ohmReserve: BigDecimal!
-  totalDepositedDAI: BigDecimal!
-  totalDepositedETH: BigDecimal!
-  totalDepositedFRAX: BigDecimal!
-  totalDepositedLUSD: BigDecimal!
-  totalDepositedOHMDAI: BigDecimal!
-  totalDepositedOHMFRAX: BigDecimal!
   depositCount: BigInt!
   redeemCount: BigInt!
   secondDeposit:[Deposit!]!
@@ -373,6 +218,7 @@ type Stake @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
+  from: Bytes!
   ohmie: Ohmie!
   timestamp: BigInt!
 }
@@ -385,6 +231,7 @@ type Unstake @entity {
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
   amount: BigDecimal!
+  from: Bytes!
   timestamp: BigInt!
 }
 

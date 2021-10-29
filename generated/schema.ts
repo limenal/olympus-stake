@@ -297,12 +297,6 @@ export class DepositYearDaiEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -442,60 +436,6 @@ export class DepositYearDaiEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -537,12 +477,6 @@ export class DepositYearETHEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -682,60 +616,6 @@ export class DepositYearETHEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -777,12 +657,6 @@ export class DepositYearFraxEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -925,60 +799,6 @@ export class DepositYearFraxEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -1020,12 +840,6 @@ export class DepositYearLusdEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -1168,60 +982,6 @@ export class DepositYearLusdEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -1250,7 +1010,7 @@ export class DepositYearLusdEntity extends Entity {
   }
 }
 
-export class DepositYearOHMDAIEntity extends Entity {
+export class DepositYearEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -1258,17 +1018,15 @@ export class DepositYearOHMDAIEntity extends Entity {
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("newBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("initBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("addition", Value.fromBoolean(false));
+    this.set("adjustment", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("expires", Value.fromBigInt(BigInt.zero()));
     this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -1276,23 +1034,20 @@ export class DepositYearOHMDAIEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(
-      id != null,
-      "Cannot save DepositYearOHMDAIEntity entity without an ID"
-    );
+    assert(id != null, "Cannot save DepositYearEntity entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save DepositYearOHMDAIEntity entity with non-string ID. " +
+        "Cannot save DepositYearEntity entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("DepositYearOHMDAIEntity", id.toString(), this);
+      store.set("DepositYearEntity", id.toString(), this);
     }
   }
 
-  static load(id: string): DepositYearOHMDAIEntity | null {
-    return changetype<DepositYearOHMDAIEntity | null>(
-      store.get("DepositYearOHMDAIEntity", id)
+  static load(id: string): DepositYearEntity | null {
+    return changetype<DepositYearEntity | null>(
+      store.get("DepositYearEntity", id)
     );
   }
 
@@ -1347,6 +1102,42 @@ export class DepositYearOHMDAIEntity extends Entity {
 
   set payout(value: BigDecimal) {
     this.set("payout", Value.fromBigDecimal(value));
+  }
+
+  get newBCV(): BigDecimal {
+    let value = this.get("newBCV");
+    return value!.toBigDecimal();
+  }
+
+  set newBCV(value: BigDecimal) {
+    this.set("newBCV", Value.fromBigDecimal(value));
+  }
+
+  get initBCV(): BigDecimal {
+    let value = this.get("initBCV");
+    return value!.toBigDecimal();
+  }
+
+  set initBCV(value: BigDecimal) {
+    this.set("initBCV", Value.fromBigDecimal(value));
+  }
+
+  get addition(): boolean {
+    let value = this.get("addition");
+    return value!.toBoolean();
+  }
+
+  set addition(value: boolean) {
+    this.set("addition", Value.fromBoolean(value));
+  }
+
+  get adjustment(): BigDecimal {
+    let value = this.get("adjustment");
+    return value!.toBigDecimal();
+  }
+
+  set adjustment(value: BigDecimal) {
+    this.set("adjustment", Value.fromBigDecimal(value));
   }
 
   get expires(): BigInt {
@@ -1411,60 +1202,6 @@ export class DepositYearOHMDAIEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -1506,12 +1243,6 @@ export class DepositYearOHMFRAXEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("dayDeposit", Value.fromStringArray(new Array(0)));
@@ -1654,60 +1385,6 @@ export class DepositYearOHMFRAXEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
-  }
-
   get depositCount(): BigInt {
     let value = this.get("depositCount");
     return value!.toBigInt();
@@ -1736,7 +1413,7 @@ export class DepositYearOHMFRAXEntity extends Entity {
   }
 }
 
-export class DepositDayEntity extends Entity {
+export class DepositYearOHMLUSDEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -1749,33 +1426,30 @@ export class DepositDayEntity extends Entity {
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
-    this.set("hourDeposit", Value.fromStringArray(new Array(0)));
+    this.set("dayDeposit", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save DepositDayEntity entity without an ID");
+    assert(
+      id != null,
+      "Cannot save DepositYearOHMLUSDEntity entity without an ID"
+    );
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save DepositDayEntity entity with non-string ID. " +
+        "Cannot save DepositYearOHMLUSDEntity entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("DepositDayEntity", id.toString(), this);
+      store.set("DepositYearOHMLUSDEntity", id.toString(), this);
     }
   }
 
-  static load(id: string): DepositDayEntity | null {
-    return changetype<DepositDayEntity | null>(
-      store.get("DepositDayEntity", id)
+  static load(id: string): DepositYearOHMLUSDEntity | null {
+    return changetype<DepositYearOHMLUSDEntity | null>(
+      store.get("DepositYearOHMLUSDEntity", id)
     );
   }
 
@@ -1894,58 +1568,224 @@ export class DepositDayEntity extends Entity {
     this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value!.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get redeemCount(): BigInt {
+    let value = this.get("redeemCount");
+    return value!.toBigInt();
+  }
+
+  set redeemCount(value: BigInt) {
+    this.set("redeemCount", Value.fromBigInt(value));
+  }
+
+  get dayDeposit(): Array<string> {
+    let value = this.get("dayDeposit");
+    return value!.toStringArray();
+  }
+
+  set dayDeposit(value: Array<string>) {
+    this.set("dayDeposit", Value.fromStringArray(value));
+  }
+}
+
+export class DepositDayEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("maxPremium", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("payout", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("expires", Value.fromBigInt(BigInt.zero()));
+    this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("newBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("initBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("addition", Value.fromBoolean(false));
+    this.set("adjustment", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositCount", Value.fromBigInt(BigInt.zero()));
+    this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
+    this.set("hourDeposit", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DepositDayEntity entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DepositDayEntity entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DepositDayEntity", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DepositDayEntity | null {
+    return changetype<DepositDayEntity | null>(
+      store.get("DepositDayEntity", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
+  get maxPremium(): BigDecimal {
+    let value = this.get("maxPremium");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
+  get payout(): BigDecimal {
+    let value = this.get("payout");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
+  set payout(value: BigDecimal) {
+    this.set("payout", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
+  get expires(): BigInt {
+    let value = this.get("expires");
+    return value!.toBigInt();
+  }
+
+  set expires(value: BigInt) {
+    this.set("expires", Value.fromBigInt(value));
+  }
+
+  get priceInUSD(): BigDecimal {
+    let value = this.get("priceInUSD");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
+  set priceInUSD(value: BigDecimal) {
+    this.set("priceInUSD", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get newBCV(): BigDecimal {
+    let value = this.get("newBCV");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
+  set newBCV(value: BigDecimal) {
+    this.set("newBCV", Value.fromBigDecimal(value));
   }
 
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
+  get initBCV(): BigDecimal {
+    let value = this.get("initBCV");
     return value!.toBigDecimal();
   }
 
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
+  set initBCV(value: BigDecimal) {
+    this.set("initBCV", Value.fromBigDecimal(value));
+  }
+
+  get addition(): boolean {
+    let value = this.get("addition");
+    return value!.toBoolean();
+  }
+
+  set addition(value: boolean) {
+    this.set("addition", Value.fromBoolean(value));
+  }
+
+  get adjustment(): BigDecimal {
+    let value = this.get("adjustment");
+    return value!.toBigDecimal();
+  }
+
+  set adjustment(value: BigDecimal) {
+    this.set("adjustment", Value.fromBigDecimal(value));
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get ohmReserve(): BigDecimal {
+    let value = this.get("ohmReserve");
+    return value!.toBigDecimal();
+  }
+
+  set ohmReserve(value: BigDecimal) {
+    this.set("ohmReserve", Value.fromBigDecimal(value));
   }
 
   get depositCount(): BigInt {
@@ -1988,13 +1828,11 @@ export class DepositHourEntity extends Entity {
     this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("newBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("initBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("addition", Value.fromBoolean(false));
+    this.set("adjustment", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("minuteDeposit", Value.fromStringArray(new Array(0)));
@@ -2125,6 +1963,42 @@ export class DepositHourEntity extends Entity {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
+  get newBCV(): BigDecimal {
+    let value = this.get("newBCV");
+    return value!.toBigDecimal();
+  }
+
+  set newBCV(value: BigDecimal) {
+    this.set("newBCV", Value.fromBigDecimal(value));
+  }
+
+  get initBCV(): BigDecimal {
+    let value = this.get("initBCV");
+    return value!.toBigDecimal();
+  }
+
+  set initBCV(value: BigDecimal) {
+    this.set("initBCV", Value.fromBigDecimal(value));
+  }
+
+  get addition(): boolean {
+    let value = this.get("addition");
+    return value!.toBoolean();
+  }
+
+  set addition(value: boolean) {
+    this.set("addition", Value.fromBoolean(value));
+  }
+
+  get adjustment(): BigDecimal {
+    let value = this.get("adjustment");
+    return value!.toBigDecimal();
+  }
+
+  set adjustment(value: BigDecimal) {
+    this.set("adjustment", Value.fromBigDecimal(value));
+  }
+
   get ohmReserve(): BigDecimal {
     let value = this.get("ohmReserve");
     return value!.toBigDecimal();
@@ -2132,60 +2006,6 @@ export class DepositHourEntity extends Entity {
 
   set ohmReserve(value: BigDecimal) {
     this.set("ohmReserve", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
   }
 
   get depositCount(): BigInt {
@@ -2228,13 +2048,11 @@ export class DepositMinuteEntity extends Entity {
     this.set("priceInUSD", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("newBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("initBCV", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("addition", Value.fromBoolean(false));
+    this.set("adjustment", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("ohmReserve", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedETH", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("depositCount", Value.fromBigInt(BigInt.zero()));
     this.set("redeemCount", Value.fromBigInt(BigInt.zero()));
     this.set("secondDeposit", Value.fromStringArray(new Array(0)));
@@ -2365,6 +2183,42 @@ export class DepositMinuteEntity extends Entity {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
+  get newBCV(): BigDecimal {
+    let value = this.get("newBCV");
+    return value!.toBigDecimal();
+  }
+
+  set newBCV(value: BigDecimal) {
+    this.set("newBCV", Value.fromBigDecimal(value));
+  }
+
+  get initBCV(): BigDecimal {
+    let value = this.get("initBCV");
+    return value!.toBigDecimal();
+  }
+
+  set initBCV(value: BigDecimal) {
+    this.set("initBCV", Value.fromBigDecimal(value));
+  }
+
+  get addition(): boolean {
+    let value = this.get("addition");
+    return value!.toBoolean();
+  }
+
+  set addition(value: boolean) {
+    this.set("addition", Value.fromBoolean(value));
+  }
+
+  get adjustment(): BigDecimal {
+    let value = this.get("adjustment");
+    return value!.toBigDecimal();
+  }
+
+  set adjustment(value: BigDecimal) {
+    this.set("adjustment", Value.fromBigDecimal(value));
+  }
+
   get ohmReserve(): BigDecimal {
     let value = this.get("ohmReserve");
     return value!.toBigDecimal();
@@ -2372,60 +2226,6 @@ export class DepositMinuteEntity extends Entity {
 
   set ohmReserve(value: BigDecimal) {
     this.set("ohmReserve", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedDAI(): BigDecimal {
-    let value = this.get("totalDepositedDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedDAI(value: BigDecimal) {
-    this.set("totalDepositedDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedETH(): BigDecimal {
-    let value = this.get("totalDepositedETH");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedETH(value: BigDecimal) {
-    this.set("totalDepositedETH", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedFRAX(): BigDecimal {
-    let value = this.get("totalDepositedFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedFRAX(value: BigDecimal) {
-    this.set("totalDepositedFRAX", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedLUSD(): BigDecimal {
-    let value = this.get("totalDepositedLUSD");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedLUSD(value: BigDecimal) {
-    this.set("totalDepositedLUSD", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMDAI(): BigDecimal {
-    let value = this.get("totalDepositedOHMDAI");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMDAI(value: BigDecimal) {
-    this.set("totalDepositedOHMDAI", Value.fromBigDecimal(value));
-  }
-
-  get totalDepositedOHMFRAX(): BigDecimal {
-    let value = this.get("totalDepositedOHMFRAX");
-    return value!.toBigDecimal();
-  }
-
-  set totalDepositedOHMFRAX(value: BigDecimal) {
-    this.set("totalDepositedOHMFRAX", Value.fromBigDecimal(value));
   }
 
   get depositCount(): BigInt {
@@ -3661,6 +3461,7 @@ export class Stake extends Entity {
     this.set("stakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("ohmie", Value.fromString(""));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
@@ -3825,6 +3626,15 @@ export class Stake extends Entity {
     this.set("currentStaked", Value.fromBigDecimal(value));
   }
 
+  get from(): Bytes {
+    let value = this.get("from");
+    return value!.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
+  }
+
   get ohmie(): string {
     let value = this.get("ohmie");
     return value!.toString();
@@ -3855,6 +3665,7 @@ export class Unstake extends Entity {
     this.set("unstakeCount", Value.fromBigInt(BigInt.zero()));
     this.set("currentStaked", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -3936,6 +3747,15 @@ export class Unstake extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get from(): Bytes {
+    let value = this.get("from");
+    return value!.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
   }
 
   get timestamp(): BigInt {

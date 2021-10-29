@@ -7,7 +7,7 @@ import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateToken } from './utils/Tokens'
 
 import { OHMDAILPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMDAISLPBOND_CONTRACT4 } from './utils/Constants'
-import {DepositAddOHMDAI} from "./utils/YearsDeposit"
+import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 /**
     @dev : Handle OHM-DAI Bond create
@@ -18,7 +18,7 @@ export function handleBondCreate(event: BondCreated) : void{
   let amount = toDecimal(event.params.deposit, 18)
   let deposit = new Deposit(transaction.id)
 
-  DepositAddOHMDAI( 'deposit', token.id, amount, transaction.timestamp)
+  DepositAdd( 'deposit', token.id, amount, transaction.timestamp)
 
   deposit.save()
 
@@ -30,7 +30,7 @@ export function handleBondRedeem(event: BondRedeemed) : void{
   let amount = toDecimal(event.params.payout, 9)
   let redeem = new Redemption(transaction.id)
 
-  DepositAddOHMDAI('redeem', token.id, amount, transaction.timestamp)
+  DepositAdd('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 
@@ -65,4 +65,6 @@ export function handleControlVariableAdjustment(event: ControlVariableAdjustment
   variable.addition = event.params.addition
 
   variable.save()
+  ControlVariableAdd('control', 'OHM-DAI', toDecimal(event.params.initialBCV, 9), toDecimal(event.params.newBCV, 9), toDecimal(event.params.adjustment, 9), event.params.addition, transaction.timestamp)
+
 }

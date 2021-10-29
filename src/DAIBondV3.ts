@@ -9,7 +9,7 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { toDecimal } from "./utils/Decimals"
 import { DAIBOND_TOKEN, OHM_ERC20_CONTRACT, DAIBOND_CONTRACTS3} from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
-import {DepositAddDAI} from "./utils/YearsDeposit"
+import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 /**
     @dev : Handle DAI Bond create
@@ -19,7 +19,7 @@ export function handleBondCreate(event: BondCreated) : void{
     let token = loadOrCreateToken(DAIBOND_TOKEN)
     let amount = toDecimal(event.params.deposit, 18)
     let deposit = new Deposit(transaction.id)
-    DepositAddDAI('deposit', token.id, amount, transaction.timestamp)
+    DepositAdd('deposit', token.id, amount, transaction.timestamp)
     deposit.amount = BigDecimal.fromString("222")
     deposit.save()
 }
@@ -30,7 +30,7 @@ export function handleBondRedeem(event: BondRedeemed) : void{
     let amount = toDecimal(event.params.payout, 9)
     let redeem = new Redemption(transaction.id)
 
-    DepositAddDAI('redeem', token.id, amount, transaction.timestamp)
+    DepositAdd('redeem', token.id, amount, transaction.timestamp)
     redeem.save()
 }
 
@@ -65,4 +65,6 @@ export function handleControlVariableAdjustment(event: ControlVariableAdjustment
     variable.addition = event.params.addition
 
     variable.save()
+    ControlVariableAdd('control', 'DAI', toDecimal(event.params.initialBCV, 9), toDecimal(event.params.newBCV, 9), toDecimal(event.params.adjustment, 9), event.params.addition, transaction.timestamp)
+
 }

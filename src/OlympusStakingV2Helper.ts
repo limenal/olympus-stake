@@ -15,9 +15,16 @@ export function handleStake(call: StakeCall): void {
     let value = toDecimal(call.inputs._amount, 9)
     let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
     let ohm_balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
-
+    let from = transaction.from
     StakeAdd("stake", 'ohm', value, transaction.timestamp, ohm_balance)
 
+    let stake = new Stake(transaction.id)
+    stake.amountStaked = value
+    stake.from = from
+    stake.currentStaked = ohm_balance
+    stake.timestamp = transaction.timestamp
+    stake.transaction = transaction.id
+    stake.save()
     // let counter = Stake.load('1')
     // if(counter == null)
     // {

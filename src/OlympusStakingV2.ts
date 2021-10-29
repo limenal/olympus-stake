@@ -27,6 +27,7 @@ export function handleUnstake(call: UnstakeCall): void {
     unstake.amount = value
     unstake.currentStaked = ohm_balance
     unstake.transaction = transaction.id
+    unstake.from = transaction.from
     unstake.timestamp = transaction.timestamp
     unstake.save()
 }

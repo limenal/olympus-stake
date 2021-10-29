@@ -11,7 +11,7 @@ import { createDailyBondRecord } from './utils/DailyBond'
 import { OHMFRAXLPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMFRAXLPBOND_CONTRACT2 } from './utils/Constants'
 
 import { getPairUSD } from './utils/Price'
-import {DepositAddOHMFRAX} from "./utils/YearsDeposit"
+import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 /**
     @dev : Handle OHM-FRAX Bond create
@@ -25,7 +25,7 @@ export function handleBondCreate(event: BondCreated) : void{
   let deposit = new Deposit(transaction.id)
   let ohm_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
 
-  DepositAddOHMFRAX('deposit', token.id, amount, transaction.timestamp)
+  DepositAdd('deposit', token.id, amount, transaction.timestamp)
   deposit.save()
 
 }
@@ -36,7 +36,7 @@ export function handleBondRedeem(event: BondRedeemed) : void{
   let amount = toDecimal(event.params.payout, 9)
   let redeem = new Redemption(transaction.id)
   
-  DepositAddOHMFRAX('redeem', token.id, amount, transaction.timestamp)
+  DepositAdd('redeem', token.id, amount, transaction.timestamp)
   redeem.save()
 }
 
@@ -71,4 +71,6 @@ export function handleControlVariableAdjustment(event: ControlVariableAdjustment
   variable.addition = event.params.addition
 
   variable.save()
+  ControlVariableAdd('control', 'OHM-FRAX', toDecimal(event.params.initialBCV, 9), toDecimal(event.params.newBCV, 9), toDecimal(event.params.adjustment, 9), event.params.addition, transaction.timestamp)
+
 }
