@@ -16,10 +16,6 @@ This subgraph dynamically tracks:
 
 3. Deploy via `graph deploy --product hosted-service <GITHUB_USER>/<SUBGRAPH NAME>`. 
 
-## Queries
-
-Below are a few ways to show how to query the uniswap-subgraph for data. The queries show most of the information that is queryable, but there are many other filtering options that can be used, just check out the [querying api](https://thegraph.com/docs/graphql-api). These queries can be used locally or in The Graph Explorer playground.
-
 ## Key Entity Overviews
 
 #### Entity nesting
