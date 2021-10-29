@@ -1,7 +1,5 @@
 # Olympus Subgraph
 
-[Uniswap](https://uniswap.org/) is a decentralized protocol for automated token exchange on Ethereum.
-
 This subgraph dynamically tracks:
 
 - stakes,
