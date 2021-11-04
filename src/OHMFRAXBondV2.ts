@@ -7,7 +7,6 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateToken } from './utils/Tokens'
 
-import { createDailyBondRecord } from './utils/DailyBond'
 import { OHMFRAXLPBOND_TOKEN, OHM_ERC20_CONTRACT, OHMFRAXLPBOND_CONTRACT2 } from './utils/Constants'
 
 import { getPairUSD } from './utils/Price'

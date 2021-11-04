@@ -124,7 +124,7 @@ type StakeYear @entity {
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   totalStaked: BigDecimal!
   totalUnstaked: BigDecimal!
   amountStaked: BigDecimal!
@@ -155,7 +155,7 @@ type StakeDay @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   hourStake: [StakeHour!]!
 }
@@ -176,7 +176,7 @@ type StakeHour @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   minuteStake: [StakeMinute!]!
 }
@@ -197,7 +197,7 @@ type StakeMinute @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   secondStake: [Stake!]!
 }
@@ -219,7 +219,7 @@ type Stake @entity {
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
   from: Bytes!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
 }
 
@@ -360,5 +360,30 @@ type RebaseDay @entity {
   timestamp: BigInt!
   profit: BigDecimal!
   amountUSD: BigDecimal!
-  hourRebase: [Rebase!]!
+  hourRebase: [RebaseHour!]!
+}
+
+type RebaseHour @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedOhms: BigDecimal!
+  percentage: BigDecimal!
+  contract: String!
+  timestamp: BigInt!
+  profit: BigDecimal!
+  amountUSD: BigDecimal!
+  minuteRebase: [RebaseMinute!]!
+}
+
+type RebaseMinute @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedOhms: BigDecimal!
+  percentage: BigDecimal!
+  contract: String!
+  timestamp: BigInt!
+  profit: BigDecimal!
+  amountUSD: BigDecimal!
 }

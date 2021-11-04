@@ -7,7 +7,6 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { toDecimal } from "./utils/Decimals"
 import { ETHBOND_TOKEN, OHM_ERC20_CONTRACT, ETHBOND_CONTRACT1} from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
-import { createDailyBondRecord } from './utils/DailyBond'
 import {DepositAdd, ControlVariableAdd} from "./utils/YearsDeposit"
 
 // import { getETHUSDRate } from './utils/Price'

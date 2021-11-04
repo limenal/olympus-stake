@@ -1,102 +1,3 @@
-type DailyBond @entity {
-  id: ID!
-  timestamp: BigInt!
-  token: Token!
-  amount: BigDecimal!
-  value: BigDecimal!
-}
-
-type Ohmie @entity {
-  id: ID!
-  historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
-  lastBalance: OhmieBalance
-  active: Boolean!
-}
-
-type OhmieBalance @entity {
-  id: ID!
-  ohmie: Ohmie!
-  sohmBalance: BigDecimal!
-  ohmBalance: BigDecimal!
-  bondBalance: BigDecimal!
-  dollarBalance: BigDecimal!
-  stakes: [ContractInfo!]
-  bonds: [ContractInfo!]
-  timestamp: BigInt!
-}
-
-type DepositYearDaiEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearETHEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearFraxEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearLusdEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
 type DepositYearEntity @entity
 { 
   id: ID!
@@ -108,42 +9,6 @@ type DepositYearEntity @entity
   initBCV: BigDecimal!
   addition: Boolean!
   adjustment: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearOHMFRAXEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
-  expires: BigInt!
-  priceInUSD: BigDecimal!
-  token: Token
-  value: BigDecimal!
-  timestamp: BigInt!
-  ohmReserve: BigDecimal!
-  depositCount: BigInt!
-  redeemCount: BigInt!
-  dayDeposit:[DepositDayEntity!]!
-}
-
-type DepositYearOHMLUSDEntity @entity
-{ 
-  id: ID!
-  transaction: Transaction
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  payout: BigDecimal!
   expires: BigInt!
   priceInUSD: BigDecimal!
   token: Token
@@ -259,7 +124,7 @@ type StakeYear @entity {
   protocolMetric: ProtocolMetric!
   transaction: Transaction!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   totalStaked: BigDecimal!
   totalUnstaked: BigDecimal!
   amountStaked: BigDecimal!
@@ -290,7 +155,7 @@ type StakeDay @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   hourStake: [StakeHour!]!
 }
@@ -311,7 +176,7 @@ type StakeHour @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   minuteStake: [StakeMinute!]!
 }
@@ -332,7 +197,7 @@ type StakeMinute @entity {
   stakeCount: BigInt!
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
   secondStake: [Stake!]!
 }
@@ -354,7 +219,7 @@ type Stake @entity {
   unstakeCount: BigInt!
   currentStaked: BigDecimal!
   from: Bytes!
-  ohmie: Ohmie!
+   
   timestamp: BigInt!
 }
 
@@ -495,5 +360,30 @@ type RebaseDay @entity {
   timestamp: BigInt!
   profit: BigDecimal!
   amountUSD: BigDecimal!
-  hourRebase: [Rebase!]!
+  hourRebase: [RebaseHour!]!
+}
+
+type RebaseHour @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedOhms: BigDecimal!
+  percentage: BigDecimal!
+  contract: String!
+  timestamp: BigInt!
+  profit: BigDecimal!
+  amountUSD: BigDecimal!
+  minuteRebase: [RebaseMinute!]!
+}
+
+type RebaseMinute @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedOhms: BigDecimal!
+  percentage: BigDecimal!
+  contract: String!
+  timestamp: BigInt!
+  profit: BigDecimal!
+  amountUSD: BigDecimal!
 }

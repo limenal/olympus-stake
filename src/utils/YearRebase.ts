@@ -2,7 +2,7 @@ import {toDecimal}from "./Decimals"
 import {STAKE_SUFFIX} from "./Suffix"
 import {getNumberDayFromDate} from './DatesSecond'
 import { BigDecimal, BigInt, Bytes } from '@graphprotocol/graph-ts';
-import {Rebase, RebaseDay, RebaseYear, Token, Transaction} from "../../generated/schema"
+import {Rebase, RebaseDay, RebaseYear, RebaseHour, RebaseMinute, Token, Transaction} from "../../generated/schema"
 import { OHM_ERC20_CONTRACT, STAKING_CONTRACT_V2 } from './Constants'
 
 
@@ -14,7 +14,6 @@ export function RebaseAdd(timeStamp:BigInt, ohmStaked: BigDecimal, amount: BigDe
     const date: Date = new Date( number);
 
     let year = RebaseYear.load(token+date.getUTCFullYear().toString()  );
-    let lastYear =  RebaseYear.load(token+(date.getUTCFullYear()-1).toString()  );
     if(year==null){
         year= new RebaseYear(token+date.getUTCFullYear().toString()  );
         year.timestamp=timeStamp;
@@ -62,4 +61,54 @@ export function RebaseAdd(timeStamp:BigInt, ohmStaked: BigDecimal, amount: BigDe
 
         day.save();
     }    
+
+    let hours = day.hourRebase;
+    let hour = RebaseHour.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString());
+    if(hour==null) {
+        hour = new RebaseHour(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString());
+        hour.timestamp=timeStamp
+            
+        hour.amount = amount
+        hour.amountUSD = amountUSD
+        hour.percentage = amount.div(ohmStaked)
+        hour.stakedOhms = ohmStaked
+        hour.save();
+
+        hours.push(hour.id)
+        day.hourRebase=hours
+
+        day.save();
+    }else {
+        hour.timestamp=timeStamp
+            
+        hour.amount = amount
+        hour.amountUSD = amountUSD
+        hour.percentage = amount.div(ohmStaked)
+        hour.stakedOhms = ohmStaked
+        hour.save()
+    }
+    let minutes= hour.minuteRebase;
+    let minute = RebaseMinute.load(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString()+"-"+date.getUTCMinutes().toString()+STAKE_SUFFIX);
+    if(minute==null) {
+        minute = new RebaseMinute(token+date.getUTCFullYear().toString()+"-"+getNumberDayFromDate(date).toString()+"-"+date.getUTCHours().toString());
+        minute.timestamp=timeStamp
+            
+        minute.amount = amount
+        minute.amountUSD = amountUSD
+        minute.percentage = amount.div(ohmStaked)
+        minute.stakedOhms = ohmStaked
+        minute.save();
+        minutes.push(minute.id)
+
+        hour.minuteRebase=minutes
+        hour.save();
+    }else {
+        minute.timestamp=timeStamp
+            
+        minute.amount = amount
+        minute.amountUSD = amountUSD
+        minute.percentage = amount.div(ohmStaked)
+        minute.stakedOhms = ohmStaked
+        minute.save();
+    }
 }

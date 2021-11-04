@@ -3,11 +3,7 @@ import {DEPOSIT_SUFFIX} from "./Suffix"
 import {getNumberDayFromDate} from './DatesSecond'
 import { BigDecimal, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {Deposit,DepositMinuteEntity,DepositHourEntity,DepositDayEntity , 
-    DepositYearEntity,
-    DepositYearETHEntity, 
-    DepositYearFraxEntity, 
-    DepositYearLusdEntity,
-     DepositYearOHMFRAXEntity, Token, Transaction, StakeYear} from "../../generated/schema"
+    DepositYearEntity, Token, Transaction, StakeYear} from "../../generated/schema"
 
 
 /**
